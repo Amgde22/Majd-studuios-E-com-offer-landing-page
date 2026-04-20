@@ -1,0 +1,102 @@
+---
+import { formatNumber } from "@utils/utils";
+import { t } from "i18n:astro";
+import { 
+  Clapperboard, 
+  Image as ImageIcon, 
+  Megaphone, 
+  Rocket, 
+  ShoppingCart,
+  Mic,
+  Pencil,
+  User,
+  PenTool,
+  Headphones,
+  Clock,
+  Banknote,
+  Package,
+  Bell,
+  Zap,
+  Infinity as InfinityIcon
+} from '@lucide/astro';
+
+interface Feature {
+  label: string;
+  icon: string;
+}
+
+interface Props {
+  title: string;
+  price: number;
+  color: string;
+  icon: string;
+  features: Feature[];
+}
+
+const { title, price, color, icon, features } = Astro.props;
+
+const colorClasses = {
+  cyan: "bg-cyan-400",
+  green: "bg-emerald-500",
+  blue: "bg-blue-600",
+  orange: "bg-amber-500",
+  red: "bg-rose-500"
+};
+
+const headerColor = colorClasses[color as keyof typeof colorClasses] || "bg-gray-400";
+
+const iconMap = {
+  clapperboard: Clapperboard,
+  image: ImageIcon,
+  megaphone: Megaphone,
+  rocket: Rocket,
+  "shopping-cart": ShoppingCart,
+  mic: Mic,
+  pencil: Pencil,
+  user: User,
+  "pen-tool": PenTool,
+  headphones: Headphones,
+  clock: Clock,
+  banknote: Banknote,
+  package: Package,
+  bell: Bell,
+  zap: Zap,
+  infinity: InfinityIcon
+};
+
+const HeaderIcon = iconMap[icon as keyof typeof iconMap] || Package;
+const currency = t("currency") || "DZD";
+---
+
+<div class="flex flex-col bg-white rounded-2xl overflow-hidden shadow-lg transition-transform hover:-translate-y-1 w-full max-w-[280px]">
+  <!-- Header -->
+  <div class={`${headerColor} p-4 flex items-center justify-between min-h-[80px]`}>
+    <h3 class="text-white font-extrabold text-xl leading-tight uppercase tracking-tight">{title}</h3>
+    <HeaderIcon size={40} class="text-white/40" />
+  </div>
+
+  <!-- Body -->
+  <div class="p-5 flex flex-col flex-grow">
+    <ul class="space-y-4 mb-8">
+      {features.map((feature) => {
+        const FeatureIcon = iconMap[feature.icon as keyof typeof iconMap] || Package;
+        return (
+          <li class="flex items-center gap-3">
+            <div class="flex-shrink-0 w-8 h-8 flex items-center justify-center">
+              <FeatureIcon size={20} class="text-gray-600" strokeWidth={2.5} />
+            </div>
+            <span class="text-gray-500 font-bold text-sm uppercase tracking-wide">{feature.label}</span>
+          </li>
+        );
+      })}
+    </ul>
+
+    <!-- Price -->
+    <div class="mt-auto border-t pt-4 border-gray-100">
+      <div class="flex items-baseline gap-1">
+        <span class="text-2xl font-black text-gray-900">{formatNumber(price)}</span>
+        <span class="text-lg font-bold text-gray-900 uppercase">{currency}</span>
+      </div>
+    </div>
+  </div>
+</div>

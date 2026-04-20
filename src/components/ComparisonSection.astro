@@ -1,0 +1,440 @@
+---
+import { t } from "i18n:astro";
+import Cta from "@components/TemplateComponents/Cta.astro"
+import { Icon } from "astro-icon/components"; // Imported Icon
+import blobBg from "@assets/images/blob-bg.webp"
+const lingosource = import.meta.glob("/src/assets/images/lingosource/*.webp")
+const infopc = import.meta.glob("/src/assets/images/info-pc/*.(webp|png)")
+const dental = import.meta.glob("/src/assets/images/dental/*.(jpg|png)")
+
+const projectsImagesArray = [lingosource , infopc , dental]
+const projectsImagesPathsArray = projectsImagesArray.map(projectImages =>  Object.keys(projectImages))
+
+// Array for rotating blob icons
+const blobIcons = ["blob-1", "blob-2", "blob-3"];
+---
+
+<section class="comparison-section" 
+style={`background-image: url(${blobBg.src})`}>
+  <div class="container">
+    <header class="section-header">
+      <h2 class="section-title" set:html={t("home:comparison.title")}></h2>
+      <p class="section-subtitle" set:html={t("home:comparison.subtitle", { currentYear: new Date().getFullYear() })}></p>
+    </header>
+
+    <div class="comparison-grid">
+      {
+        t("home:comparison.examples", { returnObjects: true }).map((example: any, index: number) => (
+          /* Added isolation and data-attribute for pattern rotation */
+          <div class="comparison-card" key={index} data-blob-pattern={index % 3}>
+            
+            {/* The Blob Icon - placed behind content */}
+            <Icon name={blobIcons[index % 3]} class="card-blob" />
+
+            <div class="card-slider">
+              <div class={`swiper swiper-${index}`}>
+                <div class="swiper-wrapper">
+                  {
+                    projectsImagesPathsArray[index].map((imagePath,imageIndex) => (
+                      <div class="swiper-slide">
+                        <img class="img-placeholder" src={imagePath} alt={`project ${index} image number : ${imageIndex}`} />
+                      </div>
+                    ))
+                  }
+                </div>
+                <div class="swiper-pagination"></div>
+                <div style="z-index: 100;" class="swiper-button-prev"></div>
+                <div style="z-index: 100;" class="swiper-button-next"></div>
+              </div>
+            </div>
+
+            <div class="card-content">
+              <h3 class="card-title">{example.title}</h3>
+              <p class="card-description">{example.description}</p>
+              <Cta variant="gold" class="border-radius-sm" />
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <div class="bg-blur bg-blur-1"></div>
+  <div class="bg-blur bg-blur-2"></div>
+</section>
+
+<script>
+  import Swiper from "swiper";
+  import "swiper/css/bundle";
+  import "swiper/css/navigation";
+  import "swiper/css/pagination";
+  import { Navigation, Pagination } from "swiper/modules";
+
+    const currentYearElement = document.querySelector(".comparison-section .section-subtitle .current-year")
+    if(currentYearElement){
+      currentYearElement.innerHTML = new Date().getFullYear()
+    }
+    document.querySelectorAll(".swiper").forEach((el) => {
+
+    new Swiper(el, {
+      modules: [Navigation, Pagination],
+      direction: "horizontal",
+      loop: true,
+      pagination: {
+        el: el.querySelector(".swiper-pagination"),
+        clickable: true,
+      },
+      navigation: {
+        nextEl: el.querySelector(".swiper-button-next"),
+        prevEl: el.querySelector(".swiper-button-prev"),
+      },
+    });
+  });
+</script>  
+
+<style lang="less" scoped>
+/* ===============================
+   VARIABLES
+   =============================== */
+@card-radius: 8px;
+@card-padding: 2rem;
+@card-bg: white;
+@card-border: rgba(0, 0, 0, 0.05);
+@slider-height-mobile: 220px;
+@slider-height-desktop: 300px;
+
+@blur-purple-1: rgba(139, 92, 246, 0.15);
+@blur-purple-2: rgba(167, 139, 250, 0.1);
+
+/* ===============================
+   BASE STYLES
+   =============================== */
+@media only screen and (min-width: 0rem) {
+  .comparison-section {
+    position: relative;
+    padding:var(--spacing-2xl) var(--spacing-sm);
+    @media (min-width:724px) {
+      padding: var(--sectionPadding)
+    }
+    background: var(--light);
+    background-blend-mode:lighten;
+    overflow: hidden;
+    isolation: isolate;
+
+    .container {
+      width:100%;
+      max-width: 1200px;
+      @media (min-width:724px) {
+        margin: 0 auto;
+      }
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      text-transform: uppercase;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--headerColor);
+      font-weight: 800;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .section-subtitle {
+      font-size: 1.2rem;
+      color: var(--bodyTextColor);
+      max-width: 600px;
+      margin: 0 auto;
+      padding:var(--spacing-lg);
+      line-height: 1.6;
+      text-transform: capitalize;
+      letter-spacing: 1px;
+    }
+
+    .comparison-grid {
+      display:flex;
+      flex-wrap: wrap;
+      gap: var(--spacing-xl);
+      justify-content: center;
+
+      width: 100%;
+
+      & > *{
+        flex:0 1 auto;
+      }
+    }
+
+    .comparison-card {
+      position: relative; // Needed for blob positioning
+      overflow: hidden;   // Contains the "peeking" blobs
+      isolation: isolate; // Ensures blobs stay behind content
+      background: @card-bg;
+      border: 1px solid @card-border;
+      border-radius: @card-radius;
+      height: 100%;
+      margin:auto;
+
+      box-shadow: 0 10px 30px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      max-width:800px !important;
+      padding:var(--spacing-lg) var(--spacing-md);
+
+      @media(min-width:400px){
+        width: 400px;
+      }
+
+      @media(min-width:500px){
+        width: 450px;
+      }
+
+      @media(min-width:724px){
+        padding: @card-padding;
+      }
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 40px -15px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Blob Styling */
+      .card-blob {
+        position: absolute;
+        z-index: -1;
+        width: 300px;
+        height: 300px;
+        pointer-events: none;
+      }
+
+      /* Rotating Patterns */
+      &[data-blob-pattern="0"] .card-blob {
+        top: -100px;
+        right: -80px;
+        // top 25% logic is handled by absolute top
+      }
+
+      &[data-blob-pattern="1"] .card-blob {
+        top: -50px;
+        left: -120px;
+        transform: rotate(45deg);
+      }
+
+      &[data-blob-pattern="2"] .card-blob {
+        bottom: 0;
+        right: 10%;
+        width: 250px;
+        height: 250px;
+        translate: 50% 50%;
+
+
+      }
+    }
+
+    .card-slider {
+      margin-bottom: 1.5rem;
+      overflow: hidden;
+
+      .swiper {
+        box-shadow: rgba(149, 157, 165, .2) 0px 8px 10px 5px;
+        background: var(--gray-300);
+        border: 8px solid  var(--gray-600);
+
+        @media(min-width:320px){
+          width: 270px;
+          height: 270px !important;
+        }
+        @media(min-width:400px){
+          width: 370px;
+          height: 270px !important;
+          scale: 0.9;
+        }
+        @media(min-width:1100px){
+          width: 270px;
+          height: 270px !important;
+          scale: 1;
+
+        }
+        
+        
+        border-radius: @card-radius;
+        overflow: hidden;
+
+        :global(.swiper-slide){
+          height:min-content;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background: #f3f3f3;
+          .img-placeholder {
+            height: 100%;
+            max-width: 100%;
+            object-fit:cover;
+            background: #e6e6e6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #555;
+            z-index: -100;
+          }
+        }
+        :global(.swiper-button-prev),
+        :global(.swiper-button-next ){
+          background-color: rgba(255, 255, 255, .8) !important;
+          border-radius: 100%;
+          box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
+          transition: background-color 80ms;
+
+          &:hover{
+            background-color: rgb(225, 225, 225) !important;
+          }
+        }
+
+        :global(.swiper-pagination){
+          background-color: var(--gray-600);
+          width:fit-content;
+          right: 0;left: 0;margin: auto;
+          padding: 8px 16px;
+          display: flex;
+          gap:8px;
+          align-items: center;
+          border-radius:32px;
+          box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        :global(.swiper-pagination-bullet){
+          width:14px;
+          height:14px;
+          cursor:pointer;
+        }
+      }
+:global(.swiper-pagination-bullet:not(.swiper-pagination-bullet-active)) {
+  background-color: var(--gray-300);
+  opacity:0.3;
+}
+
+
+
+    }
+    
+    .card-content{
+      display: flex;
+      flex-direction:column;
+      gap:var(--spacing-md);
+      .card-title,.card-description{
+        @media(min-width:769px){
+          gap:var(--spacing-md);
+        }
+      }
+      .card-title {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--headerColor);
+      }
+
+      .card-description {
+        color: var(--bodyTextColor);
+        line-height: 1.6;
+        opacity:0.4;
+        font-weight: 700;
+
+        margin-bottom: .75em;
+      }
+    }
+
+    .bg-blur {
+      position: absolute;
+      border-radius: 50%;
+      background: @blur-purple-1;
+      filter: blur(80px);
+      animation: float 20s ease-in-out infinite;
+      z-index: -1;
+    }
+
+    .bg-blur-1 {
+      width: 300px;
+      height: 300px;
+      top: -100px;
+      right: -100px;
+    }
+
+    .bg-blur-2 {
+      width: 400px;
+      height: 400px;
+      bottom: -200px;
+      left: -150px;
+      background: @blur-purple-2;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-20px) scale(1.05); }
+    }
+  }
+}
+
+/* ===============================
+   TABLET
+   =============================== */
+@media only screen and (min-width: 768px) {
+  .comparison-section {
+    .card-slider .swiper {
+      height: @slider-height-desktop;
+    }
+
+    .card-title {
+      font-size: 1.6rem;
+    }
+  }
+}
+
+/* ===============================
+   DESKTOP
+   =============================== */
+@media only screen and (min-width: 1200px) {
+  .comparison-section {
+    .comparison-grid {
+      display:flex;
+      flex-wrap: nowrap;
+      gap: 1rem;
+    }
+
+  }
+}
+
+/* ===============================
+   DARK MODE
+   =============================== */
+@media only screen and (min-width: 0rem) {
+  body.dark-mode {
+    .comparison-section {
+      background: var(--dark);
+      .section-title,
+      .card-title {
+        color: var(--bodyTextColorWhite);
+      }
+      .section-subtitle,
+      .card-description {
+        color: var(--bodyTextColorWhite);
+        opacity: 0.9;
+      }
+      .comparison-card {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+      }
+      .swiper-pagination-bullet {
+        background: var(--bodyTextColorWhite);
+      }
+    }
+  }
+}
+</style>

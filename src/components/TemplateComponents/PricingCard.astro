@@ -1,0 +1,446 @@
+---
+import { Icon } from "astro-icon/components"
+import { t } from "i18n:astro"
+import { formatNumber } from "@utils/utils"
+import Cta from "@components/TemplateComponents/Cta.astro"
+import { 
+  Clapperboard, 
+  Megaphone, 
+  Image as ImageIcon, 
+  Rocket, 
+  ShoppingCart,
+  Gem,
+  Star,
+  Zap,
+  Check
+} from '@lucide/astro';
+
+// Helper words 
+const currency = t("currency") || "DZD";
+const savedText = t("saved") || "SAVED";
+const bonusesLinkText = t("home:packages.bonusesLink") || "see this tier's free bonuses";
+const cta = t("home:packages.cta") || "GET STARTED";
+const freeWord = t("free") || "FREE";
+const serviceNames = t("home:packages.serviceNames", { returnObjects: true }) as Record<string, string>;
+
+const {
+    id,
+    tier = 0,
+    name = "TIER TITLE",
+    header, 
+    services = [],
+    price = 0,
+    oldPrice = 0,
+    bonusValue = 0,
+} = Astro.props
+
+const tierData = [
+    {
+        id: "diamond",
+        bgIcon: Gem
+    },
+    {
+        id: "gold",
+        bgIcon: Star 
+    },
+    {
+        id: "silver",
+        bgIcon: Rocket
+    },
+    {
+        id: "basic",
+        bgIcon: Zap
+    }
+]
+
+const currentTier = tierData[tier] || tierData[0];
+const themeClass = currentTier.id;
+
+// Format numbers
+const formattedPrice = typeof formatNumber === 'function' ? formatNumber(price) : price;
+const formattedOldPrice = typeof formatNumber === 'function' ? formatNumber(oldPrice) : oldPrice;
+const formattedBonus = typeof formatNumber === 'function' ? formatNumber(bonusValue) : bonusValue;
+
+const serviceIcons = {
+    creatives: Clapperboard,
+    sponsor: Megaphone,
+    ad_post: ImageIcon,
+    landing_page: Rocket,
+    e_com_store: ShoppingCart
+};
+---
+<div class="pricing-card-container">
+
+{header && <div class="top-bar">{header}</div>}
+
+<article id={`${id}-pricing-card`} class={`pricing-card ${themeClass}`}>
+    
+    <!-- Colored Header Section -->
+    <header class="card-header">
+        <h2 class="title">{name}</h2>
+        <div class="header-decoration">
+            <currentTier.bgIcon size={140} class="bg-icon" />
+        </div>
+        <!-- Shine overlay -->
+        <div class="shine"></div>
+    </header>
+
+    <!-- Body Content -->
+    <div class="card-body">
+        
+        <!-- Services Grid -->
+        <div class="services-grid">
+            {services.map((service: any) => {
+                const ServiceIcon = serviceIcons[service.name as keyof typeof serviceIcons] || Check;
+                return (
+                    <div class="service-item">
+                        <div class={`icon-wrapper ${service.free ? 'free' : ''}`}>
+                            {service.amount && <span class="amount">x{service.amount}</span>}
+                            <ServiceIcon size={32} />
+                        </div>
+                        <span class={`service-name ${service.free ? 'free-text' : ''}`}>
+                            {service.amount ? `${service.amount} ` : ''}{serviceNames[service.name] || service.name.replace('_', ' ')}
+                            {service.free && <span class="free-label">{freeWord}</span>}
+                        </span>
+                    </div>
+                )
+            })}
+        </div>
+
+        <!-- Pricing (Impact) -->
+        <div class="pricing-section impact">
+            <div class="price-wrapper">
+                <span class="price-value">{formattedPrice} </span>
+                <span class="currency">{currency}</span>
+                {oldPrice > 0 && (
+                    <span class="old-price">
+                        <del>{formattedOldPrice} {currency}</del>
+                    </span>
+                )}
+            </div>
+        </div>
+
+        <div class="cta-button-container">
+            <Cta 
+                variant={themeClass === 'silver' || themeClass === 'gold' ? themeClass : 'gray'} 
+                class="card-cta" 
+                text={cta} 
+                href={`https://wa.me/213556640229?text=i%20want%20to%20work%20with%20you%20%F0%9F%94%A5%20%2C%20I'm%20interested%20in%20${name}`}
+            />
+        </div>
+
+
+    </div>
+</article>
+</div>
+
+<style lang="less">
+    // --- VARIABLES & MIXINS ---
+
+    // Mixin for reflective shine
+    .reflective-gradient(@angle: 135deg) {
+        background: linear-gradient(
+            @angle, 
+            rgba(255, 255, 255, 0.25) 0%,   
+            rgba(255, 255, 255, 0.05) 50%,  
+            rgba(255, 255, 255, 0) 60%, 
+            rgba(0, 0, 0, 0.02) 100%
+        );
+    }
+
+    // Theme Colors
+    @silver-base: #94a3b8;
+    @gold-base: #facc15; 
+    @diamond-base: #0ea5e9; // sky-500
+    @green-bonus: #65a30d;
+
+    .pricing-card-container {
+        max-width: 350px; 
+        width: 100%;
+    }
+
+    // Top Heading
+    .top-bar {
+        margin-bottom: var(--spacing-md);
+        background-color: transparent;
+        color: var(--gray-500);
+        text-align: center;
+        font-weight: 700;
+        font-style: italic;
+        padding: var(--spacing-xs) var(--spacing-md);
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        min-height: 24px; 
+        letter-spacing: 0.5px;
+    }
+
+    .pricing-card {
+        display: flex;
+        flex-direction: column;
+        background-color: white;
+        border: 1px solid var(--gray-200);
+        width: 100%;
+        margin: 0 auto;
+        position: relative;
+        font-family: sans-serif;
+        border-radius: 12px;
+        overflow: hidden;
+
+        // Header Section
+        .card-header {
+            position: relative;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            padding-inline-start: var(--spacing-lg);
+            overflow: hidden;
+
+            .title {
+                position: relative;
+                z-index: 2;
+                font-size: calc(1.75em + (0.25) * (100vw - 340px) / (1024 - 400));
+                font-weight: 800;
+                color: var(--gray-900);
+                text-transform: uppercase;
+                margin: 0;
+            }
+
+            .header-decoration {
+                position: absolute;
+                right: -10px;
+                bottom: -20px;
+                z-index: 1;
+                
+                .bg-icon {
+                    opacity: 0.25;
+                    color: white;
+                    transform: rotate(-15deg);
+                }
+            }
+
+            .shine {
+                position: absolute;
+                inset: 0;
+                z-index: 3;
+                .reflective-gradient(135deg); 
+            }
+        }
+
+        // Content Body
+        .card-body {
+            padding: var(--spacing-lg) var(--spacing-md);
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        // Services Grid
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-md) var(--spacing-sm);
+            margin-bottom: var(--spacing-lg);
+            justify-items: center;
+
+            .service-item {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: var(--spacing-xs);
+                width: 100%;
+
+                .icon-wrapper {
+                    position: relative;
+                    color: var(--gray-400);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    height: 40px;
+                    width: 40px;
+                    
+                    &.free {
+                        color: @green-bonus;
+                    }
+
+                    .amount {
+                        position: absolute;
+                        top: -8px;
+                        right: -8px;
+                        background: var(--gray-100);
+                        color: var(--gray-900);
+                        font-size: 0.65rem;
+                        font-weight: 800;
+                        padding: 1px 4px;
+                        border-radius: 4px;
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                        z-index: 1;
+                    }
+                }
+
+                .icon-wrapper.free .amount {
+                    background: #bef264; // lime-300
+                    color: #166534; // green-800
+                }
+
+                .service-name {
+                    font-size: 0.65rem;
+                    font-weight: 800;
+                    text-transform: uppercase;
+                    color: var(--gray-500);
+                    line-height: 1.1;
+                    text-align: center;
+
+                    &.free-text {
+                        color: @green-bonus;
+                    }
+
+                    .free-label {
+                        display: block;
+                        font-size: 0.6rem;
+                        color: @green-bonus;
+                    }
+                }
+            }
+            
+            // Layout specific for 5 items (center the last two)
+            .service-item:nth-child(4) {
+                grid-column: 1 / 2;
+                margin-left: 50%;
+            }
+            .service-item:nth-child(5) {
+                grid-column: 2 / 3;
+                margin-left: 50%;
+            }
+        }
+
+        // Pricing
+        .pricing-section.impact {
+            margin-bottom: var(--spacing-lg);
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            
+            .price-wrapper {
+                display: flex;
+                align-items: baseline; 
+                justify-content: center;
+                gap: var(--spacing-xs); 
+                line-height: 1;
+            }
+
+            .price-value {
+                font-size: 2.5rem; 
+                font-weight: 900;
+                color: var(--gray-900);
+            }
+
+            .currency {
+                font-size: 1.2rem;
+                font-weight: 700;
+                color: var(--gray-600);
+                text-transform: uppercase;
+            }
+
+            .old-price {
+                font-size: 1rem;
+                color: var(--gray-400);
+                font-weight: 600;
+                margin-left: 8px;
+            }
+        }
+
+        // CTA Button   
+        .cta-button-container{
+            margin-bottom: var(--spacing-md);
+        }
+
+        // Bonuses
+        .bonus-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            gap: var(--spacing-xs);
+            width: 100%;
+
+            .bonus-text {
+                margin: 0;
+                font-size: 0.8rem;
+                color: var(--gray-400);
+                text-transform: uppercase;
+                font-weight: 600;
+            }
+
+            .bonus-value {
+                color: @green-bonus;
+                font-weight: 800;
+            }
+
+            .bonus-link {
+                display: flex;
+                align-items: center;
+                gap: var(--spacing-xs);
+                font-size: 0.75rem;
+                color: var(--gray-400);
+                text-decoration: none;
+                font-weight: 600;
+                
+                &:hover {
+                    color: var(--gray-600);
+                }
+
+                .chevron {
+                    width: 12px;
+                    height: 12px;
+                }
+            }
+        }
+    }
+
+    // THEME VARIANTS
+    .pricing-card.basic {
+        box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+        border: 1px solid var(--gray-200);
+
+        .card-header {
+            background-color: transparent;
+            .title { color: var(--gray-900); }
+            .bg-icon { color: var(--gray-100); opacity: 1; }
+        }
+
+        :global(.cta-button) {
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.05);
+            background-color: var(--gray-50);
+            border: 1px solid var(--gray-200);
+        }
+    }
+
+    .pricing-card.silver {
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1); 
+        .card-header { background-color: @silver-base; }
+    }
+
+    .pricing-card.gold {
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); 
+        .card-header { background-color: @gold-base; }
+    }
+
+    .pricing-card.diamond {
+        box-shadow: 0 25px 30px -5px rgba(0, 0, 0, 0.15); 
+        border-color: @diamond-base;
+
+        .card-header {
+            background-color: @diamond-base;
+            .title { color: white; }
+        }
+
+        :global(.cta-button) {
+            background-color: @diamond-base;
+            color: white;
+            
+            &:hover {
+                background-color: lighten(@diamond-base, 8%);
+            }
+        }
+    }
+</style>

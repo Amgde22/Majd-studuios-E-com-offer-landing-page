@@ -1,0 +1,70 @@
+{
+    "home": "Accueil",
+    "about": "À Propos",
+    "currency": "Dzd",
+    "month": "mois",
+    "saved": "ÉCONOMISÉ en bonus gratuits",
+    "free": "GRATUIT",
+    "hosting": "hébergement",
+    "monthShort": "mo",
+    "projects": "Projets",
+    "project-1": "Projet 1",
+    "project-2": "Projet 2",
+    "blog": "Blog",
+    "contact": "Contact",
+    "theme-label": "Choisissez le thème",
+    "language-label": "Choisissez la langue",
+    "languageSelect": {
+        "en": "Anglais",
+        "fr": "Français",
+        "ar": "Arabe"
+    },
+    "mainCta": "Travailler avec nous",
+    "whatsappMessage": "Je veux travailler avec vous 🔥",
+    "whatsappPackageMessage": "Je veux travailler avec vous 🔥 , je suis intéressé par {packageName}",
+    "leadMagnet": {
+        "title": "Top 3 des façons d'obtenir facilement des clients en ligne sans publicité",
+        "information": "Guide PDF gratuit (6 pages)"
+    },
+    "themeSelect": {
+        "accessibleLabel": "Sélectionner le thème",
+        "light": "Clair",
+        "dark": "Sombre",
+        "auto": "Auto"
+    },
+    "quote": "Obtenir un devis gratuit",
+    "estimate": "Obtenir une estimation maintenant",
+    "ctaComponent": {
+        "title": "Réalisez-le",
+        "subtitle": "Avec nous aujourd'hui",
+        "message": "Dites quelque chose d'accrocheur, informatif et encourageant pour cliquer sur le bouton et aller à la page de contact.",
+        "cta": "Commander maintenant"
+    },
+    "about-page": {
+        "landing": "À Propos",
+        "topper": "À Propos",
+        "title": "Titre de l'entreprise",
+        "p-1": "Notre entreprise a été créée pour offrir les meilleures créations publicitaires en Algérie.",
+        "p-2": "Nous croyons que la créativité est la clé du succès pour tout projet commercial.",
+        "p-3": "Il est très important pour nous de voir les projets de nos clients réussir et se développer.",
+        "rank": "CEO-Fondateur",
+        "cta": "Nos projets"
+    },
+    "footer": {
+        "information": "Information",
+        "services": "Services",
+        "contact": "Contact",
+        "click": "Cliquez pour envoyer un email",
+        "p": "Contenu supplémentaire si besoin.",
+        "credit": "Conçu et codé à la main par "
+    },
+    "notFound": {
+        "pageNotFound": "404 - La page que vous recherchez n'existe pas.",
+        "linkText": "Retour à l'accueil"
+    },
+    "skipLink": "Cliquez pour passer au contenu principal",
+    "pagination": {
+        "previous": "Précédent",
+        "next": "Suivant"
+    }
+}

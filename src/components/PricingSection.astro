@@ -1,0 +1,295 @@
+---
+import { Icon } from "astro-icon/components";
+import { t } from "i18n:astro";
+import PricingCard from "@components/TemplateComponents/PricingCard.astro";
+import ScrollOverlay from "@components/TemplateComponents/ScrollOverlay.astro";
+import { getTiersTotalBonuseValue, formatNumber } from "@utils/utils";
+import Tooltip from "./Tooltip.astro";
+
+const packages = t("home:packages", { returnObjects: true });
+const bonuses = packages.bonuses;
+const bonusesHeading = packages.bonusesHeading;
+const currency = t("currency");
+const freeText = t("free") || "FREE";
+const savedText = t("saved") || "SAVED";
+
+const totalSavedLabel = t("home:packages.tableTotalLabel") || "Total Value Saved";
+const totalBonusValues = getTiersTotalBonuseValue(bonuses);
+const tierCount = packages.tiers.length;
+---
+
+<section id="pricing">
+    <h2 class="heading impact">{packages.heading}</h2>
+    
+    <div class="pricing-cards-container">
+        {packages.tiers.map(
+            (tier, index) => (
+                <PricingCard
+                    {...tier}
+                    tier={index}
+                    bonusValue={totalBonusValues[tier.id] || 0}
+                />
+            )
+        )}
+    </div>
+
+
+</section>
+
+<style lang="less">
+    // --- PADDING VARIABLES ---
+    @padding-mobile: var(--spacing-xl);
+    @padding-tablet: var(--spacing-xl);
+    @padding-desktop: var(--spacing-2xl);
+
+    // --- TINT CONTROLS ---
+    @row-tint-light: #f9fafb;
+    @row-tint-footer: #f3f4f6;
+
+    // --- Colors & Vars ---
+    @gray-100: #f3f4f6;
+    @gray-200: #e5e7eb; // Inner border color
+    @gray-300: #d1d5db; // Outer border color (Darker)
+    @gray-400: #9ca3af;
+    @gray-600: #4b5563;
+    @gray-800: #1f2937;
+    @gray-900: #111827;
+    @green-accent: #65a30d;
+    
+    @silver-base: #94a3b8;
+    @gold-base: #facc15;
+
+    #pricing {
+        padding: @padding-mobile;
+        background: rgba(239, 239, 239, 1.0);
+        background: radial-gradient(at right center, #fafafa,  #e4e4e7);
+    }
+
+    .heading {
+        text-align: center;
+        font-size: calc(32px + (4) * (100vw - 340px) / (1024 - 400));
+        margin-top: var(--spacing-xl);
+        margin-bottom: var(--spacing-lg);
+        font-family: sans-serif;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        color: @gray-900;
+    }
+
+    .pricing-cards-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacing-2xl);
+    }
+
+    .bonuses-wrapper {
+
+        width: 100%;
+        max-width: 1000px;
+        margin: var(--spacing-2xl) auto 0;
+        @media (max-width:720px){
+            width: calc(100% + var(--spacing-md) * 2);
+            & .bonus-heading{
+                translate: calc(var(--spacing-md) * -1)
+            }
+        }
+
+        @media (min-width:720px){
+            padding: 0 var(--spacing-md);
+
+        }
+    }
+
+    .bonus-heading {
+        text-align: center;
+        font-size: calc(20px + (4) * (100vw - 320px) / (1024 - 320));
+        font-weight: 800;
+        margin-bottom: var(--spacing-lg);
+        color: @gray-800;
+        text-transform: uppercase;
+        max-width:100%;
+    }
+
+    // --- SCROLLBAR ABOVE TABLE TRICK ---
+    .table-scroll-container {
+        width: 100%;
+        overflow-x: auto;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        border-radius: 8px;
+        
+        // Darker outer border
+        border: 1px solid var(--gray-300); 
+        background: white;
+
+        transform: rotateX(180deg);
+
+        &::-webkit-scrollbar {
+            height: 8px;
+            background-color: @gray-100;
+            display: block; 
+        }
+        &::-webkit-scrollbar-track {
+            background: @gray-100;
+            border-radius: 8px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: @gray-400;
+            border-radius: 8px;
+            &:hover { background: @gray-600; }
+        }
+        
+        scrollbar-width: thin;
+        scrollbar-color: @gray-400 @gray-100;
+    }
+
+    .bonuses-grid {
+        display: grid;
+        grid-template-columns: minmax(200px, 1.5fr) repeat(var(--tier-count), minmax(100px, 1fr));
+        width: 100%;
+        min-width: 600px;
+        transform: rotateX(180deg);
+
+    }
+
+    .grid-cell {
+        padding: var(--spacing-md);
+        
+        // Lighter inner border
+        border-bottom: 1px solid @gray-200; 
+        display: flex;
+        align-items: center;
+        font-size: 0.95rem;
+
+        &.definition, &.empty-corner, &.footer.label {
+            left: 0;
+            border-right: 1px solid @gray-200; 
+        }
+
+        &.row-off { background-color: white; }
+        &.row-on { background-color: @row-tint-light; }
+        &.row-footer { background-color: @row-tint-footer; }
+    }
+
+    .header {
+        background-color: @gray-100;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: @gray-800;
+        justify-content: center;
+        text-align: center;
+        padding: var(--spacing-md) ;
+        
+        &.tier-name { font-size: 1.1rem; }
+
+        &.standard {
+            background-color: @silver-base;
+            color: white;
+        }
+        &.pro {
+            background-color: @gold-base;
+            color: @gray-900;
+        }
+    }
+
+    .definition {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+        
+        .def-top {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            color: @gray-800;
+        }
+        .def-bottom {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-xs);
+            font-size: 0.85rem;
+            align-items: center;
+        }
+        .cost-strike {
+            color: @gray-400;
+            del { text-decoration: line-through; }
+        }
+        .free-badge {
+            background-color: @green-accent;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+    }
+
+    .value {
+        justify-content: center;
+        .table-icon { width: 28px; height: 28px; }
+        .check { color: @green-accent; }
+        .cross { color: @gray-200; }
+    }
+
+    .footer {
+        border-bottom: none;
+        
+        // Final row separator (Darker)
+        border-top: 1px solid @gray-300; 
+        
+        padding: var(--spacing-lg) var(--spacing-md);
+        
+        &.label {
+            font-weight: 800;
+            color: @gray-900;
+            text-transform: uppercase;
+        }
+        &.amount {
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1.2;
+            .total-val {
+                color: @green-accent;
+                font-weight: 900;
+                font-size: 1.2rem;
+            }
+            .saved-tag {
+                font-size: 0.8rem;
+                font-weight: 700;
+                color: @gray-600;
+                text-align: center;
+                text-transform: uppercase;
+            }
+        }
+    }
+
+    @media only screen and (min-width: 768px) {
+        #pricing { padding: @padding-tablet; }
+        .heading { margin-bottom: var(--spacing-xl); }
+        .pricing-cards-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            justify-items: center;
+            max-width: 100vw;
+        }
+    }
+
+    @media only screen and (min-width: 1024px) {
+        #pricing { padding: @padding-desktop; }
+    }
+
+    :global([dir="rtl"]) {
+        .bonuses-grid {
+            .grid-cell.definition, 
+            .grid-cell.empty-corner, 
+            .grid-cell.footer.label {
+                left: auto;
+                right: 0;
+                border-right: none;
+                border-left: 1px solid @gray-100;
+            }
+        }
+    }
+</style>

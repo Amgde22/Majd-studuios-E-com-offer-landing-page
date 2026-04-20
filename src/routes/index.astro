@@ -1,0 +1,40 @@
+---
+// utils
+import { getLocalePath, t } from "i18n:astro";
+import {getOptimizedImage } from "@utils/utils"
+
+// components
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Hero from "@components/Hero.astro";
+import Benefits from "@components/Benefits.astro";
+
+import WhyUs from "@components/WhyUs.astro";
+import ServicesSection from "@components/ServicesSection.astro";
+import PricingSection from "@components/PricingSection.astro";
+
+
+// Optimize our landing image and pass it as props to the BaseLayout (for preloading) and Hero (for rendering)
+import landingImage from "@assets/images/hero.jpg" // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+import mobileLandingImage from "@assets/images/hero-m.jpg" // <-- THE PATH TO THE ASSET YOU WANT TO PRELOAD - The asset must live in src
+
+const optimizedLandingImage = await getOptimizedImage(landingImage)
+const optimizedMobileLandingImage = await getOptimizedImage(mobileLandingImage)
+
+
+---
+
+<BaseLayout
+  title={t("home:layout.title")}
+  description={t("home:layout.description")}
+  preloadedImage = {optimizedMobileLandingImage}
+
+>
+<Hero show3d={true} />
+<Benefits />
+<PricingSection />
+<ServicesSection />
+<WhyUs />
+
+
+
+</BaseLayout>

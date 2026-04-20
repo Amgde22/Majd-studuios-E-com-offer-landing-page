@@ -1,0 +1,14 @@
+{
+	"name": "Majd Studios",
+	"email": "magidembarek@gmail.com",
+	"phoneForTel": "0556640229",
+	"phoneFormatted": "05 56 64 02 29",
+	"address": {
+		"lineOne": "First Address Line",
+		"lineTwo": "Second Address Line",
+		"city": "",
+		"state": "",
+		"zip": "22100"
+	},
+	"domain": "www.majd-studios.pages.dev"
+}

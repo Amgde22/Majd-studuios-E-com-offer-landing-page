@@ -1,0 +1,263 @@
+{
+    "layout": {
+        "title": "أفضل المبدعين في الجزائر",
+        "description": "اكتشف عروض Majd Studio"
+    },
+    "hero": {
+        "title": "لا تكن الخيار <strong>الثاني</strong> أبداً",
+        "subtitle": "إبداع يبيع",
+        "features": [
+            "اكسب ثقة الزبون فوراً",
+            "إعلانات على [فيسبوك] و [إنستغرام]",
+            "ضاعف مبيعاتك"
+        ],
+        "cta": "ابدأ معنا :)"
+    },
+    "banner": {
+        "title": "أماكن محدودة فقط!",
+        "date": "",
+        "subtitle": "لا يمكننا العمل مع الجميع، احجز مكانك قبل اكتمال العدد"
+    },
+    "individualServices": {
+        "heading": "خدمات فردية",
+        "items": [
+            {
+                "title": "فيديو إعلاني",
+                "price": 5500,
+                "color": "cyan",
+                "icon": "clapperboard",
+                "features": [
+                    { "label": "تعليق صوتي", "icon": "mic" },
+                    { "label": "سكريبت احترافي", "icon": "pencil" },
+                    { "label": "بوجه أو بدون", "icon": "user" }
+                ]
+            },
+            {
+                "title": "منشور",
+                "price": 1200,
+                "color": "green",
+                "icon": "image",
+                "features": [
+                    { "label": "تصميم احترافي", "icon": "pen-tool" }
+                ]
+            },
+            {
+                "title": "حملة إعلانية",
+                "price": 2500,
+                "color": "blue",
+                "icon": "megaphone",
+                "features": [
+                    { "label": "استشارة", "icon": "headphones" },
+                    { "label": "مراقبة المدة", "icon": "clock" },
+                    { "label": "بأي ميزانية", "icon": "banknote" }
+                ]
+            },
+            {
+                "title": "صفحة هبوط",
+                "price": 8000,
+                "color": "orange",
+                "icon": "rocket",
+                "features": [
+                    { "label": "إمكانية الطلب", "icon": "package" },
+                    { "label": "إشعارات فورية", "icon": "bell" },
+                    { "label": "أداء فائق", "icon": "zap" }
+                ]
+            },
+            {
+                "title": "متجر إلكتروني",
+                "price": 18000,
+                "color": "red",
+                "icon": "shopping-cart",
+                "features": [
+                    { "label": "منتجات غير محدودة", "icon": "infinity" },
+                    { "label": "إمكانية الطلب", "icon": "package" },
+                    { "label": "إشعارات فورية", "icon": "bell" },
+                    { "label": "أداء فائق", "icon": "zap" }
+                ]
+            }
+        ]
+    },
+    "benefits": {
+        "heading": "كيف تعمل Majd Studios:",
+        "body": {
+            "quote": "في Majd Studios، نحن لا نصنع لك مجرد 'فيديوهات'...",
+            "explanation": "نحن نضمن توافق <strong>عرضك، جمهورك، وإعلاناتك</strong> تماماً مثل قطع الأحجية لتحقيق أقصى قدر من المبيعات"
+        },
+        "sections": [
+            {
+                "title": "دعم كامل:",
+                "subtitle": "نرافق عملائنا في كل خطوة",
+                "icon": "trust",
+                "points": [
+                    "استراتيجيات مخصصة لكل منتج",
+                    "نحن نتكفل بكل شيء <small>(زوايا التسويق، السكريبت، التصوير، المونتاج، إطلاق الإعلان، صفحات الهبوط...)</small>"
+                ]
+            },
+            {
+                "title": "استهداف دقيق:",
+                "subtitle": "اجذب الزبائن الذين يدفعون",
+                "icon": "seo",
+                "points": [
+                    "إبداعات تخاطب جمهورك مباشرة"
+                ]
+            },
+            {
+                "title": "100% حلال:",
+                "subtitle": "سياسة إسلامية صارمة",
+                "icon": "mosque",
+                "points": [
+                    "بدون ظهور نساء <small>(لا نزال نحبهن)</small>",
+                    "بدون موسيقى"
+                ]
+            }
+        ]
+    },
+    "whyUs": {
+        "title": "لماذا تختار Majd Studios",
+        "features": [
+            {
+                "title": "باقة الكل في واحد:",
+                "description": "<p class='mb-2'>عادةً، سيتعين عليك البحث عن مونتير جيد، <strong>ثم</strong> مسوق إعلاني جيد، <strong>ثم</strong> مبرمج جيد. <small>(ولكن من سيتكفل بالسكريبت، التصوير، التعليق الصوتي...)</small> </p> <p>هناك فرصة ضئيلة بأن يكون كل هؤلاء الأشخاص جيدين. لهذا السبب نحن نقدم كل شيء. نحن بارعون فيما نفعله، لأننا نهتم حقاً.</p>"
+            },
+            {
+                "title": "خدمات عالية الجودة:",
+                "description": "<p class='mb-2'>نضع 100% من اهتمامنا في كل جزء: السكريبت، التصوير، المونتاج...</p> <p>سنكون شريكك لاستشارتك قبل وبعد إطلاق إعلاناتك. وعندما تريد التوسع.</p>"
+            },
+            {
+                "title": "سنعمل مجاناً لضمان النجاح:",
+                "description": "<p class='mb-2'>إذا كان أداء إعلاناتنا <strong>أسوأ</strong> من أي شيء تشغله حالياً، فسنقوم بصنع إعلانات جديدة لك حتى تعمل بشكل أفضل.</p> نحن نطلب فقط أن تمنح إعلاناتنا نفس الميزانية."
+            }
+        ]
+    },
+    "packages": {
+        "heading": "باقاتنا",
+        "bonusesLink": "شاهد هداياك المجانية الحصرية",
+        "cta": "احجز مكانك الآن",
+        "bonusesHeading": "هدايا مجانية حصرية",
+        "tableTotalLabel": "إجمالي القيمة الموفرة",
+        "serviceNames": {
+          "creatives": "فيديو إعلاني",
+          "sponsor": "حملة إعلانية",
+          "ad_post": "منشور ",
+          "landing_page": "صفحة هبوط",
+          "e_com_store": "متجر إلكتروني"
+        },
+        "tiers": [
+            {
+                "id": "diamond",
+                "name": "الباقة الاحترافية",
+                "target": "للحلول المؤسسية الكبرى",
+                "price": 32000,
+                "oldPrice": 67500,
+                "description": "الباقة النهائية للتوسع العالمي.",
+                "services": [
+                    { "name": "creatives", "amount": 6, "free": false },
+                    { "name": "sponsor", "free": true },
+                    { "name": "ad_post", "amount": 5, "free": true },
+                    { "name": "landing_page", "free": true },
+                    { "name": "e_com_store", "free": true }
+                ]
+            },
+            {
+                "id": "pro",
+                "name": "الباقة العادية",
+                "target": "للعلامات التجارية المتنامية",
+                "price": 14000,
+                "oldPrice": 36100,
+                "description": "سيطرة كاملة على السوق مع أتمتة متقدمة.",
+                "services": [
+                    { "name": "creatives", "amount": 4, "free": false },
+                    { "name": "sponsor", "free": true },
+                    { "name": "ad_post", "amount": 3, "free": true },
+                    { "name": "landing_page", "free": true }
+                ]
+            },
+            {
+                "id": "standard",
+                "name": "باقة الانطلاق",
+                "target": "للمشاريع الصغيرة",
+                "price": 10000,
+                "oldPrice": 22000,
+                "description": "الباقة الأساسية للبدء في كسب الزبائن.",
+                "services": [
+                    { "name": "creatives", "amount": 3, "free": false },
+                    { "name": "sponsor", "free": true },
+                    { "name": "ad_post", "amount": 1, "free": true }
+                ]
+            },
+            {
+                "id": "basic",
+                "name": "باقة التجربة",
+                "target": "للاختبار",
+                "price": 8000,
+                "oldPrice": 12000,
+                "description": "ميزات أساسية للبدء.",
+                "services": [
+                    { "name": "creatives", "amount": 2, "free": false },
+                    { "name": "sponsor", "free": true }
+                ]
+            }
+        ],
+        "bonuses": [
+            {
+                "label": "النطاق (Domain) مشمول",
+                "tooltip": "اسم نطاق فريد لعملك (my-business.com) وبريد إلكتروني احترافي (contact@my-business.com)",
+                "cost": 4000,
+                "values": {
+                    "standard": { "value": true },
+                    "pro": { "value": true }
+                }
+            },
+            {
+                "label": "تدقيق استراتيجية التسويق",
+                "tooltip": "سنلقي نظرة كاملة على قمع التسويق الخاص بك واستراتيجيتك ونجد أي ثغرات قد تفقد فيها الزبائن ونحاول إصلاحها.",
+                "cost": 8000,
+                "values": {
+                    "standard": { "value": false },
+                    "pro": { "value": true }
+                }
+            },
+            {
+                "label": "استراتيجية مغناطيس الزبائن وتنفيذها",
+                "tooltip": "'مغناطيس الزبائن' (Lead Magnets) هي أداة قوية لبناء ثقة الزبائن فوراً، تعلم المزيد عنها هنا.",
+                "cost": 10000,
+                "values": {
+                    "standard": { "value": false },
+                    "pro": { "value": true }
+                }
+            },
+            {
+                "label": "تحسين ملف Google التجاري",
+                "tooltip": "سنقوم بتحسين ملفك على Google حتى تظهر عندما يبحث الناس عنك.",
+                "cost": 3000,
+                "values": {
+                    "standard": { "value": false },
+                    "pro": { "value": true }
+                }
+            },
+            {
+                "label": "إعداد التسويق عبر البريد الإلكتروني",
+                "tooltip": "سنقوم بإعداد نشرتك الإخبارية حتى تتمكن من إرسال العروض والأخبار مباشرة لبريد زبائنك.",
+                "cost": 8000,
+                "values": {
+                    "standard": { "value": false },
+                    "pro": { "value": true }
+                }
+            }
+        ]
+    },
+    "footer": {
+        "finalCta": {
+            "title": "لا تكن الخيار الثاني أبداً",
+            "subtitle": "امنح منتجك/خدمتك الفرصة للتألق",
+            "benefits": [
+                "خفض معدلات 'الاسترجاع' بمحتوى UGC عالي الثقة",
+                "تدقيق استراتيجي مدمج",
+                "محتوى حلال 100%",
+                "ضمان الأداء"
+            ],
+            "button": "ابدأ معنا اليوم"
+        },
+        "copyright": "Majd Studios. جميع الحقوق محفوظة."
+    }
+}

@@ -1,0 +1,376 @@
+---
+// benefits.astro (for reference)
+import { t } from "i18n:astro";
+
+import img1 from "@assets/images/icons/trust.png"
+import img2 from "@assets/images/icons/seo.png"
+import img3 from "@assets/images/icons/sales.png"
+import mosque from "@assets/images/icons/mosque.png"
+import Tooltip from "@components/Tooltip.astro"
+import Cta from "@components/TemplateComponents/Cta.astro"
+const icons = {
+  trust : img1,
+  seo:img2,
+  sales:img3,
+  mosque:mosque,
+}
+---
+
+<div class="beautiful-bg">
+  <section class="benefits-section section">
+    <div class="benefits-container">
+      <header class="benefits-header">
+        <h2 class="benefits-heading" set:html={t("home:benefits.heading")}></h2>
+
+        
+      </header>
+      
+      <div class="benefits-grid">
+        {t("home:benefits.sections", { returnObjects: true }).map((section: any, index: number) => (
+          <article class="benefit-card" key={index}>
+            <div class="benefit-icon">
+              <img class="benefit-icon-img" src={icons[section.icon]?.src} alt={section.title} />
+            </div>
+            <header class="benefit-card-header">
+              <h4 class="benefit-title">{section.title}</h4>
+              <h3 class="benefit-subtitle">
+                {section.subtitle}
+                {section.tooltip && (<Tooltip title={section.tooltip} />)}
+              </h3>
+            </header>
+            <ul class="benefit-points">
+              {section.points.map((point: string, pointIndex: number) => (
+                <li class="benefit-point" set:html={point} key={pointIndex}></li>
+              ))}
+            </ul>
+            <div class="benifit-cta-wrapper">
+              <Cta 
+                  text={t("mainCta")}
+                  variant="gold"
+                  href={`https://wa.me/213556640229?text=${encodeURIComponent(t("whatsappMessage"))}`}
+              />
+           </div>
+          </article>
+        ))}
+
+        <div class="benefits-body">
+           <p class="benefits-quote" set:html={t("home:benefits.body.quote")}></p> 
+           <p class="benefits-explanation" set:html={t("home:benefits.body.explanation")}></p> 
+           <Cta 
+              text={t("mainCta")}
+              variant="gold"
+              href={`https://wa.me/213556640229?text=${encodeURIComponent(t("whatsappMessage"))}`}
+           />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="bg-blur bg-blur-1"></div>
+  <div class="bg-blur bg-blur-2"></div>
+  <div class="bg-blur bg-blur-3"></div>
+  <div class="bg-blur bg-blur-4"></div>
+  <div class="bg-blur bg-blur-5"></div>
+  <div class="bg-blur bg-blur-6"></div>
+</div>
+
+<style lang="less" scoped>
+@blur-blue-1: rgba(59, 130, 246, 0.15);
+@blur-blue-2: rgba(96, 165, 250, 0.1);
+@blur-blue-3: rgba(147, 197, 253, 0.12);
+@blur-blue-4: rgba(37, 99, 235, 0.08);
+
+/*-- -------------------------- -->
+<---         Benefits           			-->
+<--- -------------------------- -*/
+
+/* Mobile - 360px */
+@media only screen and (min-width: 0rem) {
+  .beautiful-bg {
+    position: relative;
+    min-height: 100vh;
+    background: var(--secondaryDark, #172554);
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .benefits-section {
+    position: relative;
+    z-index: 1;
+    padding: 3rem 1rem;
+
+
+  }
+
+  .benefits-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .benefits-header {
+    margin-bottom: 3rem;
+  }
+
+  .benefits-heading {
+    color: var(--secondaryLight);
+    font-size: calc(35px + (10) * (100vw - 400px) / (1024 - 400));
+    margin-bottom: var(--spacing-xl);
+    font-weight: 700;
+    line-height: 1.2;
+    text-transform:capitalize;
+  }
+  :global(.benefits-heading small){
+    opacity:0.45;
+    font-size: .55em;
+    // font-size: 20px;
+
+  }
+
+  .benefits-body {
+    display:flex;
+    flex-direction:column;
+    gap:var(--spacing-lg);
+    max-width: 600px;
+    margin: auto ;
+    line-height: 1.6;
+    letter-spacing: 0.02em;
+    padding:var(--spacing-xl) 0 ;
+
+
+    p{
+      color: var(--secondaryLight);
+
+    }
+  }
+  .benifit-cta-wrapper{
+    margin-top:auto;
+    @media(min-width:1024px){
+      display:none;
+    }
+  }
+
+  .benefits-quote {
+
+    font-size: 1.1rem;
+  }
+  :global(.benefits-quote small){
+    opacity:0.45;
+
+  }
+
+  .benefits-grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1fr;
+  }
+
+  .benefit-card {
+    display: flex;
+    flex-direction: column;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 2rem;
+    backdrop-filter: blur(10px);
+
+  }
+
+  .benefit-icon {
+    width: 60px;
+    height: 60px;
+    // background: hsla(0, 0%, 100%, 0.05);
+    border-radius: 12px;
+    margin: 0 0 1.5rem;
+
+    img{
+      max-width: 100%;
+      filter:drop-shadow(0 -5px 10px rgba(255, 255, 255, 0.3));
+    }
+  }
+
+  .benefit-card-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .benefit-title {
+    color: var(--secondaryLighter, #9ca3af);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+
+
+  }
+
+  .benefit-subtitle {
+    color: var(--secondaryLight, white);
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.3;
+    text-transform:capitalize;
+  }
+
+  .benefit-tooltip {
+    margin-left: 0.5rem;
+    cursor: help;
+  }
+
+  .benefit-points {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: inherit;
+  }
+
+  .benefit-point {
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 0.75rem;
+    padding-inline-start: 1.5rem;
+    position: relative;
+    
+    &:before {
+      content: "✓";
+      position: absolute;
+      inset-inline-start: 0;
+      color: #34d399;
+      font-weight: bold;
+    }
+  }
+
+  .bg-blur {
+    position: absolute;
+    border-radius: 50%;
+    background: @blur-blue-1;
+    filter: blur(80px);
+    animation: float 20s ease-in-out infinite;
+    z-index: -1;
+  }
+
+  .bg-blur-1 {
+    width: 300px;
+    height: 300px;
+    top: -150px;
+    right: -100px;
+    animation-delay: 0s;
+  }
+
+  .bg-blur-2 {
+    width: 400px;
+    height: 400px;
+    bottom: -200px;
+    left: -150px;
+    background: @blur-blue-2;
+    animation-delay: -10s;
+  }
+
+  .bg-blur-3 {
+    width: 200px;
+    height: 200px;
+    top: 40%;
+    left: 60%;
+    background: @blur-blue-3;
+    animation-delay: -5s;
+  }
+
+  .bg-blur-4 {
+    width: 350px;
+    height: 350px;
+    top: 120vh;
+    right: 10%;
+    background: @blur-blue-2;
+    animation-delay: -15s;
+  }
+
+  .bg-blur-5 {
+    width: 250px;
+    height: 250px;
+    top: 150vh;
+    left: -50px;
+    background: @blur-blue-4;
+    animation-delay: -8s;
+  }
+
+  .bg-blur-6 {
+    width: 180px;
+    height: 180px;
+    top: 180vh;
+    left: 50%;
+    background: @blur-blue-3;
+    animation-delay: -12s;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) scale(1); }
+    50% { transform: translateY(-20px) scale(1.05); }
+  }
+}
+
+/* Tablet - 768px */
+@media only screen and (min-width: 768px) {
+  .benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+
+
+  .benefit-subtitle {
+    font-size: 1.5rem;
+  }
+
+  .bg-blur-1 {
+    width: 500px;
+    height: 500px;
+    top: -200px;
+    right: -150px;
+  }
+  
+  .bg-blur-2 {
+    width: 600px;
+    height: 600px;
+    bottom: -300px;
+    left: -200px;
+  }
+
+  .bg-blur-4 {
+    width: 450px;
+    height: 450px;
+    top: 130vh;
+  }
+
+  .bg-blur-5 {
+    width: 320px;
+    height: 320px;
+    top: 160vh;
+  }
+}
+
+/* Desktop - 1024px */
+@media only screen and (min-width: 1024px) {
+  .benefits-section {
+
+
+    margin: 0 auto;
+  }
+
+
+  .benefit-subtitle {
+    font-size: 1.35rem;
+  }
+
+  .benefit-icon {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+/* Dark Mode */
+@media only screen and (min-width: 0rem) {
+  body.dark-mode {
+    .benefit-card {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+  }
+}
+</style>

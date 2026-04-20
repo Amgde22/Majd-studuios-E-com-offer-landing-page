@@ -1,0 +1,217 @@
+---
+import { t } from "i18n:astro";
+import Cta from "@components/TemplateComponents/Cta.astro"
+import { Icon } from "astro-icon/components";
+import { getCurrentYear } from "@utils/utils";
+const year = getCurrentYear()
+const benefits = t("home:footer.finalCta.benefits", { returnObjects: true }) as string[];
+---
+
+<footer class="footer">
+  <!-- Flowing Background Line -->
+  <div class="bg-decoration">
+    <svg viewBox="0 0 1440 320" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+      <path 
+        d="M-50,160 C200,300 500,50 800,180 C1100,310 1300,50 1500,160" 
+        stroke="url(#gold-gradient-visible)" 
+        stroke-width="4" 
+        stroke-linecap="round"
+      />
+      <defs>
+        <linearGradient id="gold-gradient-visible" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#C5A059" stop-opacity="0" />
+          <stop offset="50%" stop-color="#C5A059" stop-opacity="0.25" />
+          <stop offset="100%" stop-color="#C5A059" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+    </svg>
+  </div>
+
+  <div class="container">
+    <!-- Final CTA Section -->
+    <section class="final-cta">
+      <div class="cta-content">
+        <h2 class="cta-title">{t("home:footer.finalCta.title")}</h2>
+        <p class="cta-subtitle">{t("home:footer.finalCta.subtitle")}</p>
+        
+        <ul class="benefits-list">
+          {Array.isArray(benefits) && benefits.map((benefit) => (
+            <li>
+              <Icon name="checkmark" class="check-icon" />
+              <span>{benefit}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div class="cta-wrapper">
+          <Cta 
+            text={t("mainCta")}
+            variant="gold"
+            href="https://wa.me/213556640229?text=i%20want%20to%20work%20with%20you%20%F0%9F%94%A5"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- Bottom Footer -->
+    <div class="footer-bottom">
+      <div class="brand">
+        <span class="logo mb-4">Majd Studios</span>
+        <p class="copyright">@ {year} {t("home:footer.copyright")}</p>
+        <p class="text-gray-300 text-xs">Results vary and are not guaranteed — individual outcomes depend on budget, product, and market conditions. Majd Studios is an independent agency and is not affiliated with Meta Platforms Inc. or any other third-party platform. The performance guarantee is subject to equal budget conditions and applies to creative output only, not specific revenue or ROAS targets.</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style lang="less" scoped>
+.footer {
+  position: relative;
+  background: #ffffff; 
+  color: #111111; // High contrast charcoal
+  margin-top: var(--spacing-xl);
+  border-top: 1px solid #f0f0f0;
+  overflow: hidden;
+
+  .container {
+    max-width: var(--sectionMaxWidth);
+    margin: 0 auto;
+    padding:var(--spacing-md);
+    position: relative;
+    z-index: 2;
+  }
+
+  
+}
+
+.bg-decoration {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  
+  svg {
+    width: 100%;
+    height: 100%;
+    transform: scale(1.2); // Make the line larger to cover more area
+  }
+}
+
+.final-cta {
+  padding: 5rem var(--spacing-md);
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+  position: relative;
+
+  .cta-title {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 900;
+    margin-bottom: var(--spacing-sm);
+    color: #b38e3e; // Darker, richer gold for contrast on white
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+  }
+
+  .cta-subtitle {
+    font-size: 1.25rem;
+    color: #444444; // Dark gray for readability
+    font-weight: 500;
+    margin-bottom: 3rem;
+    max-width: 650px;
+    margin-inline: auto;
+    line-height: 1.5;
+  }
+
+  .benefits-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin: 0 auto 4rem;
+    max-width: 1000px;
+    text-align: start;
+
+    li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 1.1rem;
+      color: #1a1a1a; // Near black for text
+      font-weight: 600;
+
+      .check-icon {
+        color: #b38e3e; 
+        width: 22px;
+        height: 22px;
+        flex-shrink: 0;
+        margin-top: 2px;
+      }
+    }
+  }
+
+  .cta-wrapper {
+    display: flex;
+    justify-content: center;
+    transform: scale(1.1); // Make the button slightly more prominent
+    max-width:600px;
+    margin: auto;
+  }
+}
+
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-lg) 0;
+  border-top: 2px solid #f8f8f8;
+
+  .logo {
+    font-weight: 900;
+    font-size: 1.2rem;
+    display: block;
+    margin-bottom: 4px;
+    letter-spacing: 0.02em;
+    color: #111111;
+  }
+
+  .copyright {
+    font-size: 0.85rem;
+    color: #666666;
+    font-weight: 500;
+  }
+}
+
+/* RTL Support */
+:global([dir="rtl"]) {
+  .footer {
+    .benefits-list {
+      text-align: right;
+    }
+    .footer-bottom {
+      text-align: right;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .final-cta {
+    padding: 3rem var(--spacing-sm);
+    
+    .benefits-list {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+  
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+</style>

@@ -1,0 +1,214 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  tapIcon?: string;
+  arrowIcon?: string;
+  animationAreaBlurStrength?: 1 | 2 | 3 | 4 | 5;
+  overlayBlurStrength?: 1 | 2 | 3 | 4 | 5;
+  trackWidth?: number; 
+  chevronSpacing?: number; 
+}
+
+const { 
+  tapIcon = "gesture-tap", 
+  arrowIcon = "chevron-right",
+  animationAreaBlurStrength = 4,
+  overlayBlurStrength = 1,
+  trackWidth = 200,
+  chevronSpacing = 40,
+} = Astro.props;
+
+const overlayBlurClass = `glass-${overlayBlurStrength}`;
+const animationBlurClass = `glass-${animationAreaBlurStrength}`;
+
+const numChevrons = Math.floor(trackWidth / chevronSpacing);
+const chevrons = Array.from({ length: numChevrons });
+---
+
+<div 
+  class="glass-system-wrapper" 
+  data-guidance-overlay
+  aria-hidden="true" 
+  style={`--track-w: ${trackWidth}px;`}
+>
+  <div class:list={["full-screen-backdrop", overlayBlurClass]}></div>
+  <div class="content-positioner">
+    <div class:list={["glass-animation-area", animationBlurClass]}>
+      <div class="scroll-track">
+        {chevrons.map((_, i) => (
+          <Icon 
+            name={arrowIcon} 
+            class="scroll-arrow" 
+            style={`
+              inset-inline-start: ${i * chevronSpacing}px; 
+              animation-delay: ${(numChevrons - 1 - i) * 0.15}s;
+            `}
+          />
+        ))}
+        <div class="tap-wrapper">
+          <Icon name={tapIcon} class="tap-icon" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const overlays = document.querySelectorAll('[data-guidance-overlay]');
+
+  overlays.forEach((overlay) => {
+    const scrollTarget = overlay.parentElement;
+    if (!scrollTarget) return;
+
+    let hasBeenDismissed = false;
+
+    // 1. Logic to show/hide based on scrollability
+    const checkVisibility = () => {
+      if (hasBeenDismissed) return;
+
+      const isScrollable = scrollTarget.scrollWidth > scrollTarget.clientWidth;
+      
+      if (isScrollable) {
+        overlay.classList.add('is-active');
+      } else {
+        overlay.classList.remove('is-active');
+      }
+    };
+
+    // 2. Logic to dismiss permanently on scroll
+    const handleScroll = () => {
+      const scrollPos = Math.abs(scrollTarget.scrollLeft);
+      if (scrollPos > 10) {
+        hasBeenDismissed = true;
+        overlay.classList.remove('is-active');
+        overlay.classList.add('is-dismissed');
+        
+        // Cleanup
+        scrollTarget.removeEventListener('scroll', handleScroll);
+        resizeObserver.disconnect();
+      }
+    };
+
+    // 3. Monitor size changes (responsive check)
+    const resizeObserver = new ResizeObserver(() => {
+      checkVisibility();
+    });
+
+    resizeObserver.observe(scrollTarget);
+    scrollTarget.addEventListener('scroll', handleScroll, { passive: true });
+    
+    // Initial check
+    checkVisibility();
+  });
+</script>
+
+<style lang="less">
+  .glass-1 { backdrop-filter: blur(1px); -webkit-backdrop-filter: blur(1px); }
+  .glass-2 { backdrop-filter: blur(2px); -webkit-backdrop-filter: blur(2px); }
+  .glass-3 { backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
+  .glass-4 { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+  .glass-5 { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+
+  .glass-system-wrapper {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    pointer-events: none;
+    isolation: isolate; 
+    
+    // START HIDDEN
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease, visibility 0.8s;
+
+    // ONLY SHOW IF ACTIVE
+    &.is-active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    // IF DISMISSED, STAYS HIDDEN REGARDLESS
+    &.is-dismissed {
+      display: none;
+    }
+
+    --icon-size: 42px;
+    --start-x: calc(var(--track-w) - var(--icon-size));
+    --glide-rot: 15deg; 
+    --chevron-rot: 180deg; 
+  }
+
+  :global([dir="rtl"]) .glass-system-wrapper {
+    --start-x: calc((var(--track-w) - var(--icon-size)) * -1);
+    --glide-rot: -15deg; 
+    --chevron-rot: 0deg; 
+  }
+
+  .full-screen-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.03); 
+    z-index: 1;
+  }
+
+  .content-positioner {
+    position: relative;
+    z-index: 2;
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .glass-animation-area {
+    padding: 30px 50px;
+    border-radius: 60px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 2px dashed rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+  }
+
+  .scroll-track {
+    position: relative;
+    width: var(--track-w);
+    height: 44px;
+    display: flex; align-items: center;
+  }
+
+  .scroll-arrow {
+    position: absolute;
+    width: 20px; height: 20px;
+    color: #007aff; 
+    opacity: 0;
+    will-change: transform, opacity;
+    transform: rotate(var(--chevron-rot));
+    animation: arrow-step 2.5s infinite ease-in-out;
+  }
+
+  .tap-wrapper {
+    position: absolute;
+    inset-inline-start: 0; 
+    will-change: transform, opacity;
+    transform: translateX(var(--start-x)) rotate(0deg);
+    animation: glide-final 2.5s infinite ease-in-out;
+    
+    .tap-icon {
+      width: var(--icon-size);
+      font-size: 2.6rem;
+      color: #222; 
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.15));
+    }
+  }
+
+  @keyframes glide-final {
+    0% { opacity: 0; transform: translateX(var(--start-x)) rotate(0deg); }
+    15% { opacity: 1; transform: translateX(var(--start-x)) rotate(var(--glide-rot)); }
+    80% { opacity: 0.2; transform: translateX(0) rotate(0deg); }
+    100% { opacity: 0; transform: translateX(0) rotate(0deg); }
+  }
+
+  @keyframes arrow-step {
+    0%, 15% { opacity: 0; transform: rotate(var(--chevron-rot)) scale(0.8); }
+    40%, 70% { opacity: 0.8; transform: rotate(var(--chevron-rot)) scale(1.1); }
+    100% { opacity: 0; transform: rotate(var(--chevron-rot)) scale(0.9); }
+  }
+</style>

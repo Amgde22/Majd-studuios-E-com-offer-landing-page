@@ -1,0 +1,263 @@
+{
+    "layout": {
+        "title": "Les meilleurs créatifs d'Algérie",
+        "description": "découvrez les offres de majd studio"
+    },
+    "hero": {
+        "title": "Ne soyez jamais le <strong>deuxième</strong> choix",
+        "subtitle": "Des créatifs qui vendent",
+        "features": [
+            "Gagnez instantanément la confiance du client",
+            "Diffusez des pubs sur [facebook] et [instagram]",
+            "Augmentez vos achats"
+        ],
+        "cta": "Travailler avec nous :)"
+    },
+    "banner": {
+        "title": "PLACES LIMITÉES UNIQUEMENT !",
+        "date": "",
+        "subtitle": "nous ne pouvons pas travailler avec tout le monde, réservez votre place avant que nous soyons complets"
+    },
+    "individualServices": {
+        "heading": "Services Individuels",
+        "items": [
+            {
+                "title": "Vidéo Pub",
+                "price": 5500,
+                "color": "cyan",
+                "icon": "clapperboard",
+                "features": [
+                    { "label": "Voix Off", "icon": "mic" },
+                    { "label": "Script Pro", "icon": "pencil" },
+                    { "label": "Avec/Sans Visage", "icon": "user" }
+                ]
+            },
+            {
+                "title": "Post",
+                "price": 1200,
+                "color": "green",
+                "icon": "image",
+                "features": [
+                    { "label": "Design Pro", "icon": "pen-tool" }
+                ]
+            },
+            {
+                "title": "Campagne Pub",
+                "price": 2500,
+                "color": "blue",
+                "icon": "megaphone",
+                "features": [
+                    { "label": "Consultation", "icon": "headphones" },
+                    { "label": "Suivi Durée", "icon": "clock" },
+                    { "label": "Tout Budget", "icon": "banknote" }
+                ]
+            },
+            {
+                "title": "Landing Page",
+                "price": 8000,
+                "color": "orange",
+                "icon": "rocket",
+                "features": [
+                    { "label": "Capacité de Commande", "icon": "package" },
+                    { "label": "Notifications Instantanées", "icon": "bell" },
+                    { "label": "Performance Supérieure", "icon": "zap" }
+                ]
+            },
+            {
+                "title": "Boutique E-com",
+                "price": 18000,
+                "color": "red",
+                "icon": "shopping-cart",
+                "features": [
+                    { "label": "Produits Illimités", "icon": "infinity" },
+                    { "label": "Capacité de Commande", "icon": "package" },
+                    { "label": "Notifications Instantanées", "icon": "bell" },
+                    { "label": "Performance Supérieure", "icon": "zap" }
+                ]
+            }
+        ]
+    },
+    "benefits": {
+        "heading": "Comment Majd Studios travaille :",
+        "body": {
+            "quote": "Chez majd studios, nous ne faisons pas que des 'vidéos'...",
+            "explanation": "nous veillons à ce que votre <strong>offre, audience et publicités</strong> s'emboîtent parfaitement pour générer un maximum de ventes"
+        },
+        "sections": [
+            {
+                "title": "Support Complet :",
+                "subtitle": "Accompagnement client à chaque étape",
+                "icon": "trust",
+                "points": [
+                    "Stratégies personnalisées pour chaque produit",
+                    "on s'occupe de tout <small>(angles marketing, script, tournage, montage, pub, landing pages...)</small>"
+                ]
+            },
+            {
+                "title": "Ciblage :",
+                "subtitle": "Attirez des clients qui paient",
+                "icon": "seo",
+                "points": [
+                    "Des créatifs qui parlent à votre audience"
+                ]
+            },
+            {
+                "title": "100% Halal :",
+                "subtitle": "Politique islamique stricte",
+                "icon": "mosque",
+                "points": [
+                    "Pas de femmes à l'écran <small>(on les aime quand même)</small>",
+                    "Pas de musique"
+                ]
+            }
+        ]
+    },
+    "whyUs": {
+        "title": "Pourquoi Choisir Majd Studios",
+        "features": [
+            {
+                "title": "Pack tout-en-un :",
+                "description": "<p class='mb-2'> d'habitude, vous devriez trouver un bon monteur vidéo, <strong>puis</strong> un bon media buyer, <strong>puis</strong> un bon programmeur. <small>(mais alors qui gère le script, le tournage, la voix off...)</small> </p> <p>il y a peu de chances que tous ces gens soient bons. c'est pourquoi nous offrons tout. nous sommes bons dans ce que nous faisons, parce que nous nous en soucions vraiment.</p>"
+            },
+            {
+                "title": "services de haute qualité :",
+                "description": "<p class='mb-2'>nous apportons 100% de soin à chaque partie : script, tournage, montage…</p> <p>nous serons votre partenaire pour vous conseiller avant et après le lancement de vos pubs. et quand vous voulez scaler.</p>"
+            },
+            {
+                "title": "nous travaillerons gratuitement pour garantir le succès :",
+                "description": "<p class='mb-2'>si nos pubs sont <strong>MOINS</strong> performantes que ce que vous faites actuellement, nous referons de nouvelles pubs pour vous jusqu'à ce qu'elles performent mieux.</p> nous demandons seulement que vous donniez le même budget à nos pubs."
+            }
+        ]
+    },
+    "packages": {
+        "heading": "Nos Packs",
+        "bonusesLink": "Voir vos bonus gratuits exclusifs",
+        "cta": "Réservez votre place",
+        "bonusesHeading": "Bonus Gratuits Exclusifs",
+        "tableTotalLabel": "Valeur Totale Économisée",
+        "serviceNames": {
+          "creatives": "Créations",
+          "sponsor": "Sponsor",
+          "ad_post": "Post Pub",
+          "landing_page": "Landing Page",
+          "e_com_store": "Boutique E-com"
+        },
+        "tiers": [
+            {
+                "id": "diamond",
+                "name": "Pack Professionnel",
+                "target": "Pour Solutions Entreprise d'Élite",
+                "price": 32000,
+                "oldPrice": 67500,
+                "description": "Le forfait ultime pour une échelle mondiale.",
+                "services": [
+                    { "name": "creatives", "amount": 6, "free": false },
+                    { "name": "sponsor", "free": true },
+                    { "name": "ad_post", "amount": 5, "free": true },
+                    { "name": "landing_page", "free": true },
+                    { "name": "e_com_store", "free": true }
+                ]
+            },
+            {
+                "id": "pro",
+                "name": "Pack Régulier",
+                "target": "Pour Marques en Croissance",
+                "price": 14000,
+                "oldPrice": 36100,
+                "description": "Domination complète du marché avec automatisation avancée.",
+                "services": [
+                    { "name": "creatives", "amount": 4, "free": false },
+                    { "name": "sponsor", "free": true },
+                    { "name": "ad_post", "amount": 3, "free": true },
+                    { "name": "landing_page", "free": true }
+                ]
+            },
+            {
+                "id": "standard",
+                "name": "Pack Starter",
+                "target": "Pour Petites Entreprises",
+                "price": 10000,
+                "oldPrice": 22000,
+                "description": "Le forfait essentiel pour commencer à gagner des clients.",
+                "services": [
+                    { "name": "creatives", "amount": 3, "free": false },
+                    { "name": "sponsor", "free": true },
+                    { "name": "ad_post", "amount": 1, "free": true }
+                ]
+            },
+            {
+                "id": "basic",
+                "name": "Pack d'Essai",
+                "target": "Pour Tester",
+                "price": 8000,
+                "oldPrice": 12000,
+                "description": "Fonctionnalités essentielles pour commencer.",
+                "services": [
+                    { "name": "creatives", "amount": 2, "free": false },
+                    { "name": "sponsor", "free": true }
+                ]
+            }
+        ],
+        "bonuses": [
+            {
+                "label": "Domaine inclus",
+                "tooltip": "un nom de domaine avec votre nom d'entreprise unique (my-business.com) et une adresse email professionnelle (contact@my-business.com)",
+                "cost": 4000,
+                "values": {
+                    "standard": { "value": true },
+                    "pro": { "value": true }
+                }
+            },
+            {
+                "label": "Audit Stratégie Marketing",
+                "tooltip": "nous examinerons votre tunnel, votre stratégie marketing et trouverons les failles où vous pourriez perdre des clients pour les corriger au mieux :)",
+                "cost": 8000,
+                "values": {
+                    "standard": { "value": false },
+                    "pro": { "value": true }
+                }
+            },
+            {
+                "label": "Stratégie Lead Magnet + implémentation",
+                "tooltip": "Les 'Lead Magnets' sont un outil puissant pour gagner instantanément la confiance des clients, apprenez-en plus ici",
+                "cost": 10000,
+                "values": {
+                    "standard": { "value": false },
+                    "pro": { "value": true }
+                }
+            },
+            {
+                "label": "Optimisation Profil Google Business",
+                "tooltip": "nous optimiserons votre profil google pour que vous apparaissiez quand les gens vous cherchent",
+                "cost": 3000,
+                "values": {
+                    "standard": { "value": false },
+                    "pro": { "value": true }
+                }
+            },
+            {
+                "label": "Configuration Email marketing",
+                "tooltip": "nous mettrons en place votre newsletter pour que vous puissiez envoyer vos nouveautés/promos directement sur l'email de vos clients",
+                "cost": 8000,
+                "values": {
+                    "standard": { "value": false },
+                    "pro": { "value": true }
+                }
+            }
+        ]
+    },
+    "footer": {
+        "finalCta": {
+            "title": "Ne soyez jamais le deuxième choix",
+            "subtitle": "donnez à votre produit/service la chance de briller",
+            "benefits": [
+                "Baissez les taux de 'Retour' avec un UGC haute confiance",
+                "Audit Stratégique intégré",
+                "Contenu 100% Halal",
+                "Garantie de Performance"
+            ],
+            "button": "Travailler avec nous dès aujourd'hui"
+        },
+        "copyright": "Majd Studios. Tous droits réservés."
+    }
+}

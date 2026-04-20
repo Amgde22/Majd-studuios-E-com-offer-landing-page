@@ -1,0 +1,60 @@
+---
+import { parseWithIcons } from "@utils/parseWithIcons";
+import { Icon } from "astro-icon/components";
+
+const { text, iconSize = "1.25rem", color = "#555", gap = "0.25em" } = Astro.props;
+const parts = parseWithIcons(text);
+---
+
+<span class="icon-text">
+  {parts.map((part) =>
+    part.type === "text" ? (
+      <span class="regular-text">{part.value}</span>
+    ) : (
+      <span
+        class="icon-label"
+        style={{
+          gap,
+          marginInline: `${gap}`, // adds breathing room around token
+        }}
+      >
+        <span class="label">{part.label}</span>
+        <Icon
+          name={part.name}
+          class="icon"
+          style={{ 
+            width: iconSize, 
+            height: iconSize, 
+            ...part,
+         }}
+        />
+      </span>
+    )
+  )}
+</span>
+
+<style lang="less">
+.icon-text {
+  display: inline;
+  line-height: 1.6;
+}
+
+.icon-label {
+  display: inline-flex;
+  align-items: center;
+  vertical-align: baseline; // keeps icons aligned with text
+
+  .label {
+    display: inline-block;
+  }
+
+  .icon {
+    padding:0.25em;
+
+    transition: color 0.2s ease;
+    &:hover {
+      color: #222;
+    }
+  }
+}
+</style>

@@ -1,0 +1,374 @@
+---
+import { Icon } from "astro-icon/components";
+
+---
+<div id="model-container">
+    <canvas id="canvas" ></canvas>
+    <div class="star">
+        <Icon name="star" class="star-icon" />
+    </div>
+    <div class="star">
+        <Icon name="star" class="star-icon" />
+    </div>
+    <div class="star">
+        <Icon name="star" class="star-icon" />
+    </div>
+    <!-- shadow element , edit -->
+    <div class="shadow">
+      <img class="shadow-img" src="/shadow.png" alt="">
+    </div>
+
+</div>
+
+<script>
+  import * as THREE from "three"
+  import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+  import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+  import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+  import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass.js';
+  
+  const canvas = document.querySelector("#canvas")
+  const shadowElement = document.querySelector(".shadow")
+  
+  // --- Scene Setup ---
+  const scene = new THREE.Scene()
+  const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000)
+  const renderer = new THREE.WebGLRenderer({
+    canvas:canvas,
+    alpha: true,
+    antialias: true
+  })
+  const canvasSize = 128 * 4
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+  renderer.setSize(canvasSize,canvasSize)
+  camera.position.setZ(30)
+  renderer.setClearColor(0x000000, 0);
+  
+  // --- Lighting (no changes) ---
+  const keyLight = new THREE.DirectionalLight(0xffffff, 1.0);
+  keyLight.position.set(-5, 5, 5);
+  scene.add(keyLight);
+  const fillLight = new THREE.DirectionalLight(0xffffff, 0.5);
+  fillLight.position.set(5, 2, 5);
+  scene.add(fillLight);
+  const rimLight = new THREE.DirectionalLight(0xffffff, 0.8);
+  rimLight.position.set(0, 0, -5);
+  scene.add(rimLight);
+  const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+  scene.add(ambientLight);
+
+  // --- POST-PROCESSING & OUTLINE SETUP ---
+
+  // 1. Centralized object for all outline properties
+  const outlineSettings = {
+    edgeStrength: 5.0,   // Makes the outline glow and appear thicker. Increased from 5.
+    edgeThickness: 3.0,   // A multiplier for the line width. Increased from 1.
+    visibleEdgeColor: '#000000', // The dark grey color for the outline.
+    hiddenEdgeColor: '#000000'   // Color for edges seen through other objects.
+  };
+
+  // 2. Set up the EffectComposer, which manages the render passes
+  const composer = new EffectComposer(renderer);
+
+  // 3. Add the base render pass (renders the main scene)
+  const renderPass = new RenderPass(scene, camera);
+  composer.addPass(renderPass);
+
+  // 4. Add and configure the OutlinePass using the settings object
+  const outlinePass = new OutlinePass(new THREE.Vector2(canvasSize, canvasSize), scene, camera);
+  outlinePass.edgeStrength = outlineSettings.edgeStrength;
+  outlinePass.edgeThickness = outlineSettings.edgeThickness;
+  outlinePass.visibleEdgeColor.set(outlineSettings.visibleEdgeColor);
+  outlinePass.hiddenEdgeColor.set(outlineSettings.hiddenEdgeColor);
+  composer.addPass(outlinePass);
+  
+  // --- Model Loader ---
+  const loader = new GLTFLoader();
+  loader.load('/golden-trophy-hd.glb', (gltf) => {
+    const model = gltf.scene;
+    scene.add(model);
+    
+    // --- Centering and Scaling (no changes) ---
+    const box = new THREE.Box3().setFromObject(model);
+    const center = new THREE.Vector3();
+    box.getCenter(center);
+    model.position.sub(center);
+    const size = new THREE.Vector3();
+    box.getSize(size);
+    const maxDim = Math.max(size.x, size.y, size.z);
+    const scale = 25 / maxDim;
+    model.scale.setScalar(scale);
+    camera.position.z = 24; 
+
+    // Tell the outline pass which object(s) to highlight
+    const meshesToOutline = [];
+    model.traverse(node => {
+      if (node.isMesh) {
+        meshesToOutline.push(node);
+      }
+    });
+    outlinePass.selectedObjects = meshesToOutline;
+  
+    // --- Animation State Setup (no changes) ---
+    const animationPhases = [
+      { startAngle: -15,  endAngle: 15,    duration: 2000 },
+      { startAngle: 15,   endAngle: 165,   duration: 600 },
+      { startAngle: 165,  endAngle: 195,   duration: 1500 },
+      { startAngle: 195,  endAngle: 345,   duration: 800 }
+    ];
+  
+    let currentPhaseIndex = 0;
+    let phaseElapsedTime = 0;
+    const clock = new THREE.Clock();
+  
+    // --- Main Animation Loop ---
+    function animate() {
+      requestAnimationFrame(animate);
+  
+      if (!shadowElement) return;
+  
+      // --- Time & State Management (no changes) ---
+      const deltaTime = Math.min( clock.getDelta() , 0.1)
+      phaseElapsedTime += deltaTime * 1000
+      
+      if (phaseElapsedTime >= animationPhases[currentPhaseIndex].duration) {
+        phaseElapsedTime -= animationPhases[currentPhaseIndex].duration;
+        currentPhaseIndex = (currentPhaseIndex + 1) % animationPhases.length;
+        animateStars(currentPhaseIndex)
+      }
+  
+      const currentPhase = animationPhases[currentPhaseIndex]
+      const progressAsRatio = phaseElapsedTime / currentPhase.duration;
+  
+      // --- MODEL ROTATION LOGIC (no changes) ---
+      const loadAngle = -90;
+      const angle = loadAngle +  THREE.MathUtils.lerp(currentPhase.startAngle, currentPhase.endAngle, progressAsRatio) 
+      model.rotation.y = THREE.MathUtils.degToRad(angle);
+  
+      // --- SHADOW ANIMATION LOGIC (no changes) ---
+      let shadowScaleX = 1.0;
+      switch (currentPhaseIndex) {
+        case 0: shadowScaleX = THREE.MathUtils.lerp(1.0, 0.8, progressAsRatio); break;
+        case 1: shadowScaleX = 0.8 + (1.2 - 0.8) * Math.sin(progressAsRatio * Math.PI); break;
+        case 2: shadowScaleX = THREE.MathUtils.lerp(0.8, 1.0, progressAsRatio); break;
+        case 3: shadowScaleX = 1.0 + (1.2 - 1.0) * Math.sin(progressAsRatio * Math.PI); break;
+      }
+      shadowElement.style.transform = `translateX(-50%) scaleX(${shadowScaleX})`;
+  
+      // --- RENDER THE SCENE ---
+      composer.render();
+    }
+  
+    animate();
+  }, undefined, (error) => console.error('Load failed:', error));
+  
+  // --- Star Animation Logic (no changes) ---
+  function animateStars(phase) {
+    if (phase == 0) toggleStars(true);
+    if (phase == 2) toggleStars(false);
+  }
+  function toggleStars(boolean) {
+    const starElements = document.querySelectorAll(".star")
+    if (!starElements.length) return;
+    starElements.forEach(starElement => starElement.classList.toggle("active", boolean));
+  }
+</script>
+
+
+<style  scoped>
+
+
+/* Ensure canvas is positioned so z-index works */
+canvas#canvas {
+  position: relative;
+  z-index: 0; /* Stays above the shadow */
+  /* ... your other filter styles ... */
+  --outline-width:5px;
+  --outline-color:rgb(59, 59, 59);
+  /* filter:   
+    drop-shadow(var(--outline-width) var(--outline-width) var(--outline-color)) 
+    drop-shadow(calc(var(--outline-width) * -1) calc(var(--outline-width) * -1) var(--outline-color))
+    drop-shadow(calc(var(--outline-width) * -1) var(--outline-width) var(--outline-color))
+    drop-shadow(var(--outline-width) calc(var(--outline-width) * -1) var(--outline-color))
+  ; */
+}
+
+/* ... rest of your CSS ... */
+#model-container{
+  --rotation:0deg;
+  position: absolute;
+
+
+
+  rotate: var(--rotation);
+  scale: 0.25;
+  transform-origin: 0% 0%;
+  filter: brightness(1.15) ;
+
+
+  z-index: -1;
+}
+.star {
+  --size: 100px;
+  --rotation: 0; 
+
+
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+  filter:drop-shadow(0 0 10px rgba(0, 0, 0, 0.15));
+
+  border-radius: 100%;
+
+  /* --- INITIAL STATE --- */
+  opacity: 0;
+  transform: translate(0, 0) rotate(0deg) scale(1);
+}
+.star .star-icon{
+    display: block;
+    width:100%;
+    height:100%;
+    color:goldenrod;
+
+}
+
+/* --- STAR-SPECIFIC VARIABLES --- */
+.star:nth-of-type(1) {
+  --distance: 200px;
+  --duration: 180ms;
+  top: 0; left: 0; right: 0;
+  margin: auto;
+}
+.star:nth-of-type(2) {
+  --distance: 220px;
+  --duration: 120ms;
+  top: 15%; left: 25%; right: 0;
+  margin: auto;
+}
+.star:nth-of-type(3) {
+  --distance: 200px;
+  --duration: 160ms;
+  top: 0; left: 0; right: 25%; bottom: 0;
+  margin: auto;
+}
+
+/* === THE ANIMATION LOGIC === */
+.star.active {
+  /* --- PHASE 1: THE THROW (Transition) --- */
+  /* This applies when .active is ADDED. */
+  transition:
+    transform var(--duration) cubic-bezier(0.33, 1, 0.68, 1),
+    opacity calc(var(--duration) * 0.5) ease-in;
+
+  opacity: 1;
+  
+  transform: 
+    translateX(calc(cos(var(--rotation) * 1deg) * var(--distance))) 
+    translateY(calc(sin(var(--rotation) * 1deg) * -1 * var(--distance)))
+    rotate(180deg);
+
+  /* --- PHASE 2: THE FLOAT (Keyframes) --- */
+  animation-name: floatAndShimmer;
+  animation-duration: 1s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  animation-delay: var(--duration);
+}
+
+
+/* --- DEFINITION FOR THE SUBTLE SHIMMER ANIMATION --- */
+@keyframes floatAndShimmer {
+  /* Starting point */
+  0% {
+    transform: 
+      translateX(calc(cos(var(--rotation) * 1deg) * var(--distance))) 
+      translateY(calc(sin(var(--rotation) * 1deg) * -1 * var(--distance)))
+      rotate(180deg)
+      scale(1);
+  }
+
+  /* --- A MORE SUBTLE FLICKER (A "SHIMMER") --- */
+  /* Scale changes are less extreme (e.g., 0.9 and 1.1) */
+  25% {
+    transform: 
+      translateX(calc(cos(var(--rotation) * 1deg) * (var(--distance) * 1.1))) 
+      translateY(calc(sin(var(--rotation) * 1deg) * -1 * (var(--distance) * 1.1)))
+      rotate(200deg)
+      scale(0.9); /* Gentle shrink */
+    opacity: 1;
+
+  }
+  50% {
+    transform: 
+      translateX(calc(cos(var(--rotation) * 1deg) * (var(--distance) * 1.25))) 
+      translateY(calc(sin(var(--rotation) * 1deg) * -1 * (var(--distance) * 1.25)))
+      rotate(225deg)
+      scale(1.1); /* Gentle grow */
+  }
+  75% {
+    transform: 
+      translateX(calc(cos(var(--rotation) * 1deg) * (var(--distance) * 1.4))) 
+      translateY(calc(sin(var(--rotation) * 1deg) * -1 * (var(--distance) * 1.4)))
+      rotate(250deg)
+      scale(0.95); /* Gentle shrink */
+  }
+
+  /* --- FINAL STATE --- */
+  /* NOTE: Opacity is NO LONGER controlled here. */
+  /* The star will float to its final position and wait with opacity: 1 */
+  90% {
+    transform: 
+      translateX(calc(cos(var(--rotation) * 1deg) * (var(--distance) * 1.5))) 
+      translateY(calc(sin(var(--rotation) * 1deg) * -1 * (var(--distance) * 1.5)))
+      rotate(270deg)
+      scale(1); 
+
+  }
+  100%{
+
+    transform: 
+    translateX(calc(cos(var(--rotation) * 1deg) * (var(--distance) * 1.5))) 
+    translateY(calc(sin(var(--rotation) * 1deg) * -1 * (var(--distance) * 1.5)))
+    rotate(270deg)
+    scale(0); 
+    opacity: 0;
+  }
+}
+body{
+  display: grid;
+  place-items: center;
+}
+
+.text{
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 900;
+  text-transform: capitalize;
+  color: #202020;
+}
+.top{
+  z-index: -2;
+}
+.shadow {
+  position: absolute;
+  left: 75%;
+  bottom: 0; 
+  width: 75%; 
+  height: 80%;
+  border-radius: 50%;
+  transform-origin:left;
+  transform: translateX(-50%) scaleX(1);
+  rotate: 15deg;
+  z-index: -1;
+}
+.shadow-img{
+  width: 100%;
+  height: 100%;
+  scale: 1.5;
+  opacity:.5;
+}
+
+:global([dir="rtl"]) #model-container {
+  transform-origin: top right;
+  
+}
+</style>

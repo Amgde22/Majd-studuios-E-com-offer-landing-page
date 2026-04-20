@@ -1,0 +1,298 @@
+{
+    "layout":{
+      "title":"Algeria's best creatives",
+      "description":"descover majd studio's offers"
+    },
+    "hero": {
+      "title": "Never Be The <strong>Second</strong> Choice",
+      "subtitle": "Creatives that sell",
+      "features": [
+        "Instantly Gain client trust",
+        "show ads on [facebook] and [instagram]",
+        "Increase purchases"
+      ],
+      "cta": "Work with us :)"
+    },
+    "banner":{
+      "title":"LIMITED SPOTS ONLY! ",
+      "date":"",
+      "subtitle":"we can't work with eveyone , secure a spot before we max out"
+    },
+
+    "individualServices": {
+      "heading": "Individual Services",
+      "items": [
+        {
+          "title": "Ad Video",
+          "price": 5500,
+          "color": "cyan",
+          "icon": "clapperboard",
+          "features": [
+            { "label": "Voiceover", "icon": "mic" },
+            { "label": "Pro Script", "icon": "pencil" },
+            { "label": "With/Without Face", "icon": "user" }
+          ]
+        },
+        {
+          "title": "Post",
+          "price": 1200,
+          "color": "green",
+          "icon": "image",
+          "features": [
+            { "label": "Pro Design", "icon": "pen-tool" }
+          ]
+        },
+        {
+          "title": "Ad Campaign",
+          "price": 2500,
+          "color": "blue",
+          "icon": "megaphone",
+          "features": [
+            { "label": "Consultation", "icon": "headphones" },
+            { "label": "Duration Monitoring", "icon": "clock" },
+            { "label": "Any Budget", "icon": "banknote" }
+          ]
+        },
+        {
+          "title": "Landing Page",
+          "price": 8000,
+          "color": "orange",
+          "icon": "rocket",
+          "features": [
+            { "label": "Ordering Capability", "icon": "package" },
+            { "label": "Instant Notifications", "icon": "bell" },
+            { "label": "Superior Performance", "icon": "zap" }
+          ]
+        },
+        {
+          "title": "E-com Store",
+          "price": 18000,
+          "color": "red",
+          "icon": "shopping-cart",
+          "features": [
+            { "label": "Unlimited Products", "icon": "infinity" },
+            { "label": "Ordering Capability", "icon": "package" },
+            { "label": "Instant Notifications", "icon": "bell" },
+            { "label": "Superior Performance", "icon": "zap" }
+          ]
+        }
+      ]
+    },
+
+
+    "benefits": {
+      "heading": "How Majd Studios works :",
+      "body": {
+        "quote": "At majd studios don't just make you 'videos'... ",
+        "explanation": "we make sure your <strong>offer , audience and ads </strong> all fit together like puzzle pieces to bring in the maximum number of sales"
+      },
+      "sections": [
+        {
+          "title": "Full Support:",
+          "subtitle": "Following our clients on every step",
+          "icon":"trust",
+          "points": [
+            "Custom strategies for each product",
+            "we handle everything <small>(marketing angles , script ,filming , editing , running the ad , landing pages...)</small>"
+          ]
+        },
+        {
+          "title": "Targeting:",
+          "subtitle": "Attract clients that pay",
+          "icon":"seo",
+
+          "points": [
+            "Creatives that speak to your audience"
+          ]
+        },
+        {
+          "title": "100% Halal:",
+          "subtitle": "Strict islamic policy",
+          "icon":"mosque",
+
+          "points": [
+            "No showing women <small>(we still love them)</small>",
+            "No music"
+          ]
+        }
+      ]
+    },
+    "whyUs": {
+        "title": "Why Choose Majd Studios",
+        "features": [
+          {
+            "title": "All-in-one package :",
+            "description": "<p class='mb-2'> usually , you'd have to find a good video editor , <strong>then</strong> a good media buyer , <strong>then</strong> a good programmer. <small>(but then who handles the script , filming , voice over...)</small> </p> <p>there is a low chance all of the people you find will be good. that's why we offer everything. we are good at what we do , because we actually care.</p>"
+          },
+          {
+            "title": "high quality services :",
+            "description": "<p class='mb-2'>we put 100% care in every part : scripting , filming , editing…</p> <p>we will partner with you to consult you before and after you launch your ads. and when you want to scale.</p>"
+          },
+          {
+            "title": "we’ll work for free to guarantee success :",
+            "description": "<p class='mb-2'>if our ads preform <strong>WORSE</strong> than whatever you are running. we will make new ads for you until they preform better.</p> we only require that you give our ads the same budget."
+          }
+
+        ]
+
+    },
+    
+    "packages": {
+      "heading": "Our Packs",
+      "bonusesLink": "See your exclusive free bonuses",
+      "cta": "Secure Your Spot",
+      "bonusesHeading": "Exclusive Free Bonuses",
+      "tableTotalLabel": "Total Value Saved",
+      "serviceNames": {
+        "creatives": "Creatives",
+        "sponsor": "Sponsor",
+        "ad_post": "Ad Post",
+        "landing_page": "Landing Page",
+        "e_com_store": "E-com Store"
+      },
+      "tiers": [
+        {
+          "id": "diamond",
+          "name": "Professional Pack",
+          "target": "For Elite Enterprise Solutions",
+          "price": 32000,
+          "oldPrice": 67500,
+          "description": "The ultimate package for global scale.",
+          "services": [
+            { "name": "creatives", "amount": 6, "free": false },
+            { "name": "sponsor", "free": true },
+            { "name": "ad_post", "amount": 5, "free": true },
+            { "name": "landing_page", "free": true },
+            { "name": "e_com_store", "free": true }
+          ]
+        },
+        {
+          "id": "pro",
+          "name": "Regular Pack",
+          "target": "For Growing Brands",
+          "price": 14000,
+          "oldPrice": 36100,
+          "description": "Complete market dominance with advanced automation.",
+          "services": [
+            { "name": "creatives", "amount": 4, "free": false },
+            { "name": "sponsor", "free": true },
+            { "name": "ad_post", "amount": 3, "free": true },
+            { "name": "landing_page", "free": true }
+          ]
+        },
+        {
+          "id": "standard",
+          "name": "Starter Pack",
+          "target": "For Small Businesses",
+          "price": 10000,
+          "oldPrice": 22000,
+          "description": "The essential package to start winning clients.",
+          "services": [
+            { "name": "creatives", "amount": 3, "free": false },
+            { "name": "sponsor", "free": true },
+            { "name": "ad_post", "amount": 1, "free": true }
+          ]
+        },
+        {
+          "id": "basic",
+          "name": "Trial Pack",
+          "target": "For Testing",
+          "price": 8000,
+          "oldPrice": 12000,
+          "description": "Essential features to get started.",
+          "services": [
+            { "name": "creatives", "amount": 2, "free": false },
+            { "name": "sponsor", "free": true }
+          ]
+        }
+
+
+
+    ],
+      "bonuses":[
+        {
+          "label":"Domain included",
+          "tooltip":"a domain name with your unique business name (my-business.com) and a professional email adress (contact@my-business.com)",
+          "cost":4000,
+          "values":{
+            "standard":{
+              "value":true
+            },
+            "pro":{
+              "value":true
+            }
+          }
+        },
+        {
+          "label":"Msrketing Strategy audit" ,
+          "tooltip":"we'll take a complete look at your funel , your marketing strategy and find any holes where you might be leaking clients and try to fix them the best way we can :)",
+          "cost":8000,
+          "values":{
+            "standard":{
+              "value":false
+            },
+            "pro":{
+              "value":true
+            }
+          }
+        },
+        {
+          "label":"Lead Magnet strategy + implimentation" ,
+          "tooltip":"'Lead Magnets' are a powerful tool for any business to gain client trust instantly , learn more about them here ",
+          "cost":10000,
+          "values":{
+            "standard":{
+              "value":false
+            },
+            "pro":{
+              "value":true
+            }
+          }
+        },
+        {
+          "label":"Google Business Profile optimization",
+          "tooltip":"we'll optimize your google profile so you show up when people search for you",
+          "cost":3000,
+          "values":{
+            "standard":{
+              "value":false
+            },
+            "pro":{
+              "value":true
+            }
+          }
+        },
+        {
+          "label":"Email marketing setup",
+          "tooltip":"we'll set up your email newsletter for you so you can send new drops/promotions/news directly to your client's email",
+          "cost":8000,
+          "values":{
+            "standard":{
+              "value":false
+            },
+            "pro":{
+              "value":true
+            }
+          }
+        }
+        
+
+ 
+      ]
+    },
+    "footer": {
+      "finalCta": {
+        "title": "Never Be The Second Choice",
+        "subtitle": "give your product/service the chance to shine",
+        "benefits": [
+          "Lower 'Retour' rates with high-trust UGC",
+          "Built-in Strategic Audit",
+          "100% Halal Content",
+          "Performance Guarantee"
+        ],
+        "button": "Work with us today"
+      },
+      "copyright": "Majd Studios. All rights reserved."
+    }
+  
+  }
