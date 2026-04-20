@@ -1,7 +1,7 @@
 import { defineConfig , passthroughImageService} from "astro/config";
 import icon from "astro-icon";
 import i18n from "@astrolicious/i18n";
-import sitemap from "@astrojs/sitemap";
+// import sitemap from "@astrojs/sitemap";
 import tailwind from '@astrojs/tailwind';
 
 export default defineConfig({
@@ -25,7 +25,7 @@ export default defineConfig({
 					fr: "/a-propos",
 				}
 			},
-    }),
-    sitemap(),
+    })
+    // sitemap(),
   ],
 });
