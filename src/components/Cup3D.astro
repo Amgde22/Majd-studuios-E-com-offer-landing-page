@@ -40,7 +40,7 @@ import { Icon } from "astro-icon/components";
   })
   const canvasSize = 128 * 4
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
-  renderer.setSize(canvasSize,canvasSize)
+  renderer.setSize(canvasSize,canvasSize,false)
   camera.position.setZ(30)
   renderer.setClearColor(0x000000, 0);
   
@@ -191,6 +191,7 @@ canvas#canvas {
     drop-shadow(calc(var(--outline-width) * -1) var(--outline-width) var(--outline-color))
     drop-shadow(var(--outline-width) calc(var(--outline-width) * -1) var(--outline-color))
   ; */
+  opacity:.85;
 }
 
 /* ... rest of your CSS ... */
