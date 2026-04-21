@@ -7,6 +7,7 @@ interface Props {
     variant?: 'silver' | 'gold' | 'gray';
     icon?: string;
     class?: string;
+    smallerText?:boolean;
 }
 
 const { 
@@ -14,13 +15,19 @@ const {
     text = t("ctaComponent.cta"), 
     variant = "gray", 
     icon = "arrow-circle",
-    class: className 
+    class: className ,
+    smallerText = false
 } = Astro.props;
+
+const bigTextClasses = "text-base"
+const smallTextClasses = "text-xs sm:text-base"
+
+const fontSizeClass = smallerText?smallTextClasses : bigTextClasses
 ---
 
 <a href={href} class={`cta-button ${variant} ${className || ''}`}>
-    <span class="cta-text">{text}</span>
-    {icon && <Icon name={icon} class="cta-icon" />}
+    <span class={`cta-text ${fontSizeClass}`} >{text}</span>
+    {icon && <Icon name={icon} class="cta-icon " />}
     <div class="shine"></div>
 </a>
 
@@ -49,6 +56,7 @@ const {
         .cta-text {
             position: relative;
             z-index: 2;
+            font-family: "Anton", "Almarai", Arial, sans-serif !important;
         }
 
         .cta-icon {

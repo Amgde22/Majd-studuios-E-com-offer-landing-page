@@ -122,8 +122,7 @@ const isLandingPage = Astro.url.pathname === "/" || trimmedLocales.includes(trim
 
 {/* Inlined to avoid FOUC. Uses global scope from `ThemeProvider.astro` */}
 <script is:inline>
-	StarlightThemeProvider.getPreferredColorScheme();
-	StarlightThemeProvider.updatePickers();
+	
 </script>
 
 <style>

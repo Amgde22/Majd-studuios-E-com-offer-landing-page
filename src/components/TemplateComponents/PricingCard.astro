@@ -31,6 +31,7 @@ const {
     services = [],
     price = 0,
     oldPrice = 0,
+    target,
     bonusValue = 0,
 } = Astro.props
 
@@ -99,7 +100,7 @@ const serviceIcons = {
                             <ServiceIcon size={32} />
                         </div>
                         <span class={`service-name ${service.free ? 'free-text' : ''}`}>
-                            {service.amount ? `${service.amount} ` : ''}{serviceNames[service.name] || service.name.replace('_', ' ')}
+                            {service.amount ? `x${service.amount} ` : ''}{serviceNames[service.name] || service.name.replace('_', ' ')}
                             {service.free && <span class="free-label">{freeWord}</span>}
                         </span>
                     </div>
@@ -109,11 +110,11 @@ const serviceIcons = {
 
         <!-- Pricing (Impact) -->
         <div class="pricing-section impact">
-            <div class="price-wrapper">
-                <span class="price-value">{formattedPrice} </span>
-                <span class="currency">{currency}</span>
+            <div class="price-wrapper flex-wrap">
+                <span class="price-value text-2xl sm:text-4xl">{formattedPrice} </span>
+                <span class="currency text-sm  sm:text-xl">{currency}</span>
                 {oldPrice > 0 && (
-                    <span class="old-price">
+                    <span class="old-price ">
                         <del>{formattedOldPrice} {currency}</del>
                     </span>
                 )}
@@ -124,6 +125,7 @@ const serviceIcons = {
             <Cta 
                 variant={themeClass === 'silver' || themeClass === 'gold' ? themeClass : 'gray'} 
                 class="card-cta" 
+                smallerText
                 text={cta} 
                 href={`https://wa.me/213556640229?text=i%20want%20to%20work%20with%20you%20%F0%9F%94%A5%20%2C%20I'm%20interested%20in%20${name}`}
             />
@@ -198,7 +200,7 @@ const serviceIcons = {
             .title {
                 position: relative;
                 z-index: 2;
-                font-size: calc(1.75em + (0.25) * (100vw - 340px) / (1024 - 400));
+                font-size: calc(1.2em + (0.75) * (100vw - 340px) / (1024 - 400));
                 font-weight: 800;
                 color: var(--gray-900);
                 text-transform: uppercase;
@@ -330,13 +332,13 @@ const serviceIcons = {
             }
 
             .price-value {
-                font-size: 2.5rem; 
+
                 font-weight: 900;
                 color: var(--gray-900);
             }
 
             .currency {
-                font-size: 1.2rem;
+
                 font-weight: 700;
                 color: var(--gray-600);
                 text-transform: uppercase;
